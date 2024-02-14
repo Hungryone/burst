@@ -1,10 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My Simple Site- take 2</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catch the Button Game</title>
+<style>
+  body {
+    text-align: center;
+    margin-top: 50px;
+  }
+  #gameZone {
+    position: relative;
+    width: 90%;
+    height: 500px;
+    margin: auto;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    overflow: hidden;
+  }
+  #clickMeBtn {
+    position: absolute;
+    padding: 10px 20px;
+    cursor: pointer;
+    user-select: none;
+    transition: top 0.2s, left 0.2s;
+  }
+</style>
+<script>
+  let score = 0;
+
+  function moveButton() {
+    const gameZone = document.getElementById('gameZone');
+    const clickMeBtn = document.getElementById('clickMeBtn');
+    const maxX = gameZone.clientWidth - clickMeBtn.clientWidth;
+    const maxY = gameZone.clientHeight - clickMeBtn.clientHeight;
+    clickMeBtn.style.left = Math.random() * maxX + 'px';
+    clickMeBtn.style.top = Math.random() * maxY + 'px';
+    score++;
+    document.getElementById('score').textContent = score;
+  }
+</script>
 </head>
 <body>
-    <h1>Hello World!</h1>
-    <p>This is my simple, text-only webpage.</p>
+
+<h1>Catch the Button Game</h1>
+<div id="gameZone" onclick="moveButton()">
+  <button id="clickMeBtn">Click me if you can!</button>
+</div>
+<p>Score: <span id="score">0</span></p>
+
 </body>
 </html>
