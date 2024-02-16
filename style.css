@@ -26,4 +26,7 @@ p {
   width: 80%; /* Limits the width of paragraphs to 80% of their container */
   max-width: 600px; /* Ensures paragraphs don't get too wide on large screens */
 }
-  
+  input, button {
+  font-size: 1.25rem; /* Adjust this value as needed */
+  padding: 10px; /* Adds some padding for better touch interaction and visibility */
+}
