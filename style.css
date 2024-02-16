@@ -1,6 +1,6 @@
 /* Set the base font size on the root element */
 html {
-  font-size: 12px; /* This is typically the default, but it's good to define it */
+  font-size: 14px; /* This is typically the default, but it's good to define it */
 }
 
 /* Apply global styles */
