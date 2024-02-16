@@ -21,7 +21,7 @@
       const userGuess = document.getElementById('guessInput').value;
       guesses++;
       if (userGuess == secretNumber) {
-        document.getElementById('feedback').textContent = `Congratulations! You guessed it in ${guesses} guesses.`;
+        document.getElementById('feedback').textContent = `Congratulations Pierce! You guessed it in ${guesses} guesses.`;
       } else if (userGuess < secretNumber) {
         document.getElementById('feedback').textContent = 'Too low. Try again!';
       } else if (userGuess > secretNumber) {
