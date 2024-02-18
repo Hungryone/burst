@@ -15,7 +15,10 @@
         const ctx = canvas.getContext('2d');
 
         let boatImage = new Image();
-        boatImage.src = 'boat.png'; // Updated to the correct image file name
+        boatImage.src = 'boat.png'; // Make sure this is the correct path to your boat image
+
+        // Adding the sound effect
+        let boatSound = new Audio('engine.wav'); // Make sure this is the correct path to your sound file
 
         let boat = {
             x: canvas.width / 2 - 50,
@@ -39,6 +42,9 @@
         }
 
         document.addEventListener('keydown', function(e) {
+            // Play the boat engine sound
+            boatSound.play();
+
             switch(e.keyCode) {
                 case 37: // left arrow key
                     if (boat.x > 0) boat.x -= boat.speed; // Move left
