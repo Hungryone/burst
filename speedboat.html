@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Pierce's Speedboat Racing Game</title>
+    <title>Speedboat Racing Game</title>
     <style>
         canvas {
-            background-color: #87CEEB; /* Light sky blue background to represent water */
+            background-color: #87CEEB;
         }
     </style>
 </head>
@@ -14,17 +14,20 @@
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
 
+        let boatImage = new Image();
+        boatImage.src = 'speedboat.png'; // Path to your speedboat image
+
+        let boatSound = new Audio('engine.wav'); // Path to your engine sound
+
         let boat = {
-            x: canvas.width / 2,
-            y: canvas.height / 2,
-            width: 30,
-            height: 50,
-            speed: 5
+            x: canvas.width / 2 - 50,
+            y: canvas.height / 2 - 75,
+            width: 100, // Adjust based on your image size
+            height: 150 // Adjust based on your image size
         };
 
         function drawBoat() {
-            ctx.fillStyle = '#FFD700'; // Gold color boat
-            ctx.fillRect(boat.x, boat.y, boat.width, boat.height); // Draw the boat
+            ctx.drawImage(boatImage, boat.x, boat.y, boat.width, boat.height);
         }
 
         function clearCanvas() {
@@ -37,6 +40,10 @@
         }
 
         document.addEventListener('keydown', function(e) {
+            boatSound.pause(); // Stop the sound to prevent overlapping
+            boatSound.currentTime = 0; // Reset the sound to start
+            boatSound.play(); // Play the engine sound
+
             switch(e.keyCode) {
                 case 37: // left arrow key
                     boat.x -= boat.speed;
@@ -54,7 +61,9 @@
             updateGame();
         });
 
-        updateGame(); // Initial drawing
+        boatImage.onload = function() {
+            updateGame(); // Draw the boat image once it's loaded
+        };
     </script>
 </body>
 </html>
