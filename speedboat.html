@@ -4,7 +4,7 @@
     <title>Speedboat Racing Game</title>
     <style>
         canvas {
-            background-color: #87CEEB;
+            background-color: #87CEEB; /* Light sky blue background to represent water */
         }
     </style>
 </head>
@@ -15,15 +15,14 @@
         const ctx = canvas.getContext('2d');
 
         let boatImage = new Image();
-        boatImage.src = 'boat.png'; // Path to your speedboat image
-
-        let boatSound = new Audio('engine.wav'); // Path to your engine sound
+        boatImage.src = 'boat.png'; // Updated to the correct image file name
 
         let boat = {
             x: canvas.width / 2 - 50,
             y: canvas.height / 2 - 75,
             width: 100, // Adjust based on your image size
-            height: 150 // Adjust based on your image size
+            height: 150, // Adjust based on your image size
+            speed: 10 // Define the speed of the boat
         };
 
         function drawBoat() {
@@ -40,22 +39,18 @@
         }
 
         document.addEventListener('keydown', function(e) {
-            boatSound.pause(); // Stop the sound to prevent overlapping
-            boatSound.currentTime = 0; // Reset the sound to start
-            boatSound.play(); // Play the engine sound
-
             switch(e.keyCode) {
                 case 37: // left arrow key
-                    boat.x -= boat.speed;
+                    if (boat.x > 0) boat.x -= boat.speed; // Move left
                     break;
                 case 38: // up arrow key
-                    boat.y -= boat.speed;
+                    if (boat.y > 0) boat.y -= boat.speed; // Move up
                     break;
                 case 39: // right arrow key
-                    boat.x += boat.speed;
+                    if (boat.x + boat.width < canvas.width) boat.x += boat.speed; // Move right
                     break;
                 case 40: // down arrow key
-                    boat.y += boat.speed;
+                    if (boat.y + boat.height < canvas.height) boat.y += boat.speed; // Move down
                     break;
             }
             updateGame();
