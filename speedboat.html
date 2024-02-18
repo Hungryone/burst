@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pierce's Speedboat Racing Game</title>
+    <style>
+        canvas {
+            background-color: #87CEEB; /* Light sky blue background to represent water */
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let boat = {
+            x: canvas.width / 2,
+            y: canvas.height / 2,
+            width: 30,
+            height: 50,
+            speed: 5
+        };
+
+        function drawBoat() {
+            ctx.fillStyle = '#FFD700'; // Gold color boat
+            ctx.fillRect(boat.x, boat.y, boat.width, boat.height); // Draw the boat
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function updateGame() {
+            clearCanvas();
+            drawBoat();
+        }
+
+        document.addEventListener('keydown', function(e) {
+            switch(e.keyCode) {
+                case 37: // left arrow key
+                    boat.x -= boat.speed;
+                    break;
+                case 38: // up arrow key
+                    boat.y -= boat.speed;
+                    break;
+                case 39: // right arrow key
+                    boat.x += boat.speed;
+                    break;
+                case 40: // down arrow key
+                    boat.y += boat.speed;
+                    break;
+            }
+            updateGame();
+        });
+
+        updateGame(); // Initial drawing
+    </script>
+</body>
+</html>
