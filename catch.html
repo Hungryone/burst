@@ -98,7 +98,6 @@
       border-radius: 20px;
       border: 2px solid rgba(102, 126, 234, 0.3);
       overflow: hidden;
-      cursor: crosshair;
       box-shadow:
         0 0 40px rgba(102, 126, 234, 0.2),
         inset 0 0 60px rgba(102, 126, 234, 0.1);
@@ -285,7 +284,7 @@
       </div>
     </div>
 
-    <p class="tap-hint">Tap anywhere in the zone to move the button</p>
+    <p class="tap-hint">Click the button to score!</p>
   </div>
 
   <footer class="footer">
@@ -306,7 +305,7 @@
       document.getElementById('score').textContent = score;
     }
 
-    document.getElementById('gameZone').addEventListener('click', moveButton);
+    document.getElementById('clickMeBtn').addEventListener('click', moveButton);
   </script>
 </body>
 </html>
