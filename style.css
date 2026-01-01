@@ -105,6 +105,26 @@ body {
   opacity: 0.9;
 }
 
+/* Placeholder Card */
+.game-card-placeholder {
+  opacity: 0.7;
+  cursor: default;
+}
+
+.game-card-placeholder:hover {
+  transform: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+}
+
+.coming-soon-btn {
+  background: #999;
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
 /* Footer */
 .footer {
   text-align: center;
