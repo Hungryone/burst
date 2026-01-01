@@ -1,35 +1,175 @@
-/* Set the base font size on the root element */
-html {
-  font-size: 16px; /* This is typically the default, but it's good to define it */
-}
-
-/* Apply global styles */
-body {
-  font-family: 'Arial', sans-serif; /* Sets the font for the entire page */
+/* Base styles */
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  text-align: center; /* Centers the text */
-  background-color: #f0f0f0; /* Light grey background */
 }
 
-/* Style headings */
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  background-color: #f5f7fa;
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Hero Header */
+.hero {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+/* Main Container */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  flex: 1;
+}
+
+/* Games Grid */
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Game Cards */
+.game-card {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+}
+
+.game-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+}
+
+.game-card h2 {
+  font-size: 1.4rem;
+  margin-bottom: 0.75rem;
+  color: #333;
+}
+
+.game-card p {
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  flex: 1;
+}
+
+.play-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: opacity 0.2s ease;
+}
+
+.game-card:hover .play-btn {
+  opacity: 0.9;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 2rem;
+  background: white;
+  border-top: 1px solid #eee;
+}
+
+.about-link {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: color 0.2s ease;
+}
+
+.about-link:hover {
+  color: #764ba2;
+}
+
+/* Legacy styles for other pages */
 h1 {
-  color: #333; /* Dark grey color for the h1 tag */
-  font-size: 3.75rem; /* Adjusted for better visibility, equivalent to 60px if base size is 16px */
+  color: #333;
+  font-size: 2.5rem;
 }
 
-/* Style paragraphs */
 p {
-  color: #666; /* Medium grey color for paragraph text */
-  font-size: 1.25rem; /* Adjusted for readability, equivalent to 20px if base size is 16px */
-  margin: 20px auto; /* Adds margin to the top and bottom of paragraphs */
-  width: 80%; /* Limits the width of paragraphs to 80% of their container */
-  max-width: 600px; /* Ensures paragraphs don't get too wide on large screens */
+  color: #666;
+  font-size: 1.25rem;
+  margin: 20px auto;
+  width: 80%;
+  max-width: 600px;
 }
- input, button {
-  font-size: 3.25rem; /* Adjust this value as needed */
-  padding: 10px; /* Adds some padding for better touch interaction and visibility */
-  width: 100%; /* Adjust this value as needed */
-  box-sizing: border-box; /* Ensures padding does not affect the final size */
-  max-width: 600px; /* Ensures the input does not get too wide on larger screens */
+
+input, button {
+  font-size: 1.5rem;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 600px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .hero {
+    padding: 2rem 1rem;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .games-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .game-card {
+    padding: 1.5rem;
+  }
+
+  .game-icon {
+    font-size: 3rem;
+  }
 }

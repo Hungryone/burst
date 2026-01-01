@@ -2,25 +2,43 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Let's Play With HTML!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keith's Game Zone</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>
-  Welcome to Keith's<br>Brand New Page
-  <br>
-  <br>
-  Games
-  <br><br>
-  <a href="catch.html">Catch the Thing!</a>
-  <br>
-  <br>
-    <a href="number.html">Guess the Number</a>
-    <br>
-    <br>
-    <a href="speedboat.html">Pierce's Speedboat Racing Game</a>
-    <br><br><br>
-  <a href="about.html">About me</a>
-  </h1>
+  <header class="hero">
+    <h1>Keith's Game Zone</h1>
+    <p class="hero-subtitle">Fun games made with love</p>
+  </header>
+
+  <main class="container">
+    <section class="games-grid">
+      <a href="catch.html" class="game-card">
+        <span class="game-icon">🎯</span>
+        <h2>Catch the Thing</h2>
+        <p>Click the button if you can! It moves every time you try.</p>
+        <span class="play-btn">Play</span>
+      </a>
+
+      <a href="number.html" class="game-card">
+        <span class="game-icon">🔢</span>
+        <h2>Guess the Number</h2>
+        <p>Can you guess the secret number between 1 and 100?</p>
+        <span class="play-btn">Play</span>
+      </a>
+
+      <a href="speedboat.html" class="game-card">
+        <span class="game-icon">🚤</span>
+        <h2>Speedboat Racing</h2>
+        <p>Race across the waves! Use arrow keys to control your boat.</p>
+        <span class="play-btn">Play</span>
+      </a>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <a href="about.html" class="about-link">About Me</a>
+  </footer>
 </body>
 </html>
