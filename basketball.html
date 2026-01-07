@@ -199,6 +199,144 @@
       const [loadingPhase, setLoadingPhase] = useState(0);
       const [showStats, setShowStats] = useState(false);
       const [errorMessage, setErrorMessage] = useState('');
+      const [article, setArticle] = useState(null);
+
+      // Article templates with placeholders for dynamic content
+      const articleTemplates = [
+        {
+          headline: "{winnerName} Dominate in {winnerScore}-{loserScore} Victory",
+          subheadline: "{topScorer} leads all scorers with {topScorerPoints} points",
+          body: "In an electrifying showdown, {winnerName} secured a decisive {margin}-point victory over {loserName}, finishing {winnerScore}-{loserScore}. {topScorer} was the star of the night, pouring in {topScorerPoints} points to lead all scorers. {secondScorer} added {secondScorerPoints} points in a supporting role, while {topRebounder} controlled the glass with {topRebounds} rebounds. The {loserName} fought hard but couldn't overcome the offensive firepower of their opponents."
+        },
+        {
+          headline: "{topScorer} Erupts for {topScorerPoints} as {winnerName} Cruise to Victory",
+          subheadline: "Final Score: {winnerName} {winnerScore}, {loserName} {loserScore}",
+          body: "{topScorer} put on a scoring clinic tonight, tallying {topScorerPoints} points to power {winnerName} past {loserName} {winnerScore}-{loserScore}. The {margin}-point margin tells the story of a game that was controlled from start to finish. {topAssister} dished out {topAssists} assists, keeping the offense flowing, while {topRebounder} hauled in {topRebounds} boards to dominate the paint."
+        },
+        {
+          headline: "Thriller! {winnerName} Edge {loserName} {winnerScore}-{loserScore}",
+          subheadline: "{topScorer}'s {topScorerPoints}-point performance makes the difference",
+          body: "It came down to the wire, but {winnerName} emerged victorious with a hard-fought {winnerScore}-{loserScore} win over {loserName}. {topScorer} was the hero of the night with {topScorerPoints} points, including several clutch baskets down the stretch. {secondScorer} contributed {secondScorerPoints} points, and {topRebounder}'s {topRebounds} rebounds proved crucial in securing extra possessions when it mattered most."
+        },
+        {
+          headline: "{winnerName} Roll Past {loserName} Behind Balanced Attack",
+          subheadline: "Five players contribute as team secures {winnerScore}-{loserScore} win",
+          body: "{winnerName} showcased their depth tonight in a convincing {winnerScore}-{loserScore} victory over {loserName}. While {topScorer} led the way with {topScorerPoints} points, it was the collective effort that sealed the deal. {topAssister} ran the show with {topAssists} assists, and {topRebounder} pulled down {topRebounds} rebounds. {loserName} simply had no answer for the balanced offensive attack."
+        },
+        {
+          headline: "Statement Win: {winnerName} Crush {loserName} by {margin}",
+          subheadline: "{topScorer} drops {topScorerPoints} in dominant performance",
+          body: "{winnerName} sent a message with a commanding {winnerScore}-{loserScore} demolition of {loserName}. {topScorer} was unstoppable, finishing with {topScorerPoints} points on efficient shooting. The defense was equally impressive, forcing turnovers and limiting {loserName}'s best looks. {topRebounder} cleaned up the glass with {topRebounds} rebounds, while {topAssister} orchestrated the offense with {topAssists} dimes."
+        },
+        {
+          headline: "{topScorer} Goes Off! {winnerName} Win {winnerScore}-{loserScore}",
+          subheadline: "Career-type night leads team to crucial victory",
+          body: "What a performance from {topScorer}! The star player exploded for {topScorerPoints} points as {winnerName} defeated {loserName} {winnerScore}-{loserScore}. From beyond the arc to attacks at the rim, {topScorer} was simply unguardable tonight. {secondScorer} provided valuable support with {secondScorerPoints} points, and {topRebounder}'s {topRebounds} rebounds helped {winnerName} control the tempo throughout."
+        },
+        {
+          headline: "{winnerName} Survive Scare, Beat {loserName} {winnerScore}-{loserScore}",
+          subheadline: "Late surge powered by {topScorer}'s {topScorerPoints} points",
+          body: "It wasn't pretty, but {winnerName} got the job done with a {winnerScore}-{loserScore} win over a tough {loserName} squad. {topScorer} carried the load with {topScorerPoints} points, including key buckets when the game hung in the balance. {topAssister}'s {topAssists} assists kept teammates involved, and {topRebounder} battled for {topRebounds} rebounds in a physical contest that came down to execution in crunch time."
+        },
+        {
+          headline: "Blowout! {winnerName} Demolish {loserName} {winnerScore}-{loserScore}",
+          subheadline: "{margin}-point margin marks dominant victory",
+          body: "{winnerName} turned this one into a laugher early, cruising to a {winnerScore}-{loserScore} blowout win over {loserName}. The {margin}-point victory featured {topScorer}'s game-high {topScorerPoints} points and {topRebounder}'s dominant {topRebounds}-rebound performance. By halftime, the outcome was never in doubt as {winnerName} imposed their will on both ends of the floor."
+        },
+        {
+          headline: "{winnerName} Outlast {loserName} in High-Scoring Affair",
+          subheadline: "{topScorer} leads the way with {topScorerPoints} in {winnerScore}-{loserScore} final",
+          body: "Defense was optional tonight as {winnerName} outgunned {loserName} {winnerScore}-{loserScore} in an offensive showcase. {topScorer} was the leading scorer with {topScorerPoints} points, but it took contributions from everyone to secure the win. {secondScorer} added {secondScorerPoints} points, {topAssister} dished {topAssists} assists, and {topRebounder} grabbed {topRebounds} boards in a game that featured momentum swings throughout."
+        },
+        {
+          headline: "Defensive Masterclass Leads {winnerName} Past {loserName}",
+          subheadline: "{topScorer}'s {topScorerPoints} points complement stifling defense",
+          body: "{winnerName} locked down {loserName} en route to a {winnerScore}-{loserScore} victory that showcased their defensive prowess. While {topScorer} provided the offense with {topScorerPoints} points, it was the team's ability to force tough shots that made the difference. {topStealer} came up with {topSteals} steals, disrupting passing lanes, and {topBlocker} protected the rim with {topBlocks} blocks."
+        },
+        {
+          headline: "{winnerName} Complete Comeback, Stun {loserName} {winnerScore}-{loserScore}",
+          subheadline: "{topScorer} sparks rally with {topScorerPoints}-point effort",
+          body: "Down but never out, {winnerName} stormed back to defeat {loserName} {winnerScore}-{loserScore} in a stunning comeback victory. {topScorer} refused to let the team lose, scoring {topScorerPoints} points including a flurry in the decisive stretch. {topAssister} found open teammates for {topAssists} assists, and {topRebounder}'s {topRebounds} rebounds gave {winnerName} the extra possessions they needed to complete the rally."
+        },
+        {
+          headline: "Historic Night: {winnerName} Topple {loserName} {winnerScore}-{loserScore}",
+          subheadline: "{topScorer} records {topScorerPoints} points in memorable performance",
+          body: "This one will be remembered. {winnerName} delivered a statement with a {winnerScore}-{loserScore} triumph over {loserName}, led by {topScorer}'s memorable {topScorerPoints}-point outing. The victory was built on teamwork, with {topAssister} distributing {topAssists} assists and {topRebounder} controlling the boards with {topRebounds} rebounds. {loserName} had no answer as {winnerName} played their most complete game of the season."
+        },
+        {
+          headline: "{winnerName} Too Much for {loserName} in {winnerScore}-{loserScore} Win",
+          subheadline: "Balanced scoring attack overwhelms opponents",
+          body: "{loserName} simply couldn't keep up with {winnerName}'s firepower in a {winnerScore}-{loserScore} defeat. {topScorer} paced the winners with {topScorerPoints} points, while {secondScorer} chipped in {secondScorerPoints}. On the glass, {topRebounder} was a force with {topRebounds} rebounds, and {topAssister}'s {topAssists} assists ensured everyone got involved in the offensive onslaught."
+        },
+        {
+          headline: "Wire-to-Wire: {winnerName} Control {loserName} {winnerScore}-{loserScore}",
+          subheadline: "{topScorer} sets the tone with {topScorerPoints} points",
+          body: "From the opening tip to the final buzzer, {winnerName} were in command, defeating {loserName} {winnerScore}-{loserScore}. {topScorer} established dominance early with {topScorerPoints} points, never letting the opposition find their rhythm. {topRebounder} owned the paint with {topRebounds} rebounds, and {topAssister}'s vision resulted in {topAssists} assists as {winnerName} executed their game plan to perfection."
+        },
+        {
+          headline: "{topScorer} Shines as {winnerName} Down {loserName}",
+          subheadline: "Final: {winnerName} {winnerScore}, {loserName} {loserScore}",
+          body: "All eyes were on {topScorer} tonight, and the star delivered with {topScorerPoints} points to lead {winnerName} to a {winnerScore}-{loserScore} victory over {loserName}. The {margin}-point win featured outstanding performances across the roster, including {topRebounder}'s {topRebounds} rebounds and {topAssister}'s {topAssists} assists. {loserName} put up a fight but ultimately fell short against the superior squad."
+        }
+      ];
+
+      const generateArticle = (stats1, stats2, score1, score2) => {
+        const isTeam1Winner = score1 > score2;
+        const winnerStats = isTeam1Winner ? stats1 : stats2;
+        const loserStats = isTeam1Winner ? stats2 : stats1;
+        const winnerScore = isTeam1Winner ? score1 : score2;
+        const loserScore = isTeam1Winner ? score2 : score1;
+        const winnerName = isTeam1Winner ? "The Ballers" : "The Rangers";
+        const loserName = isTeam1Winner ? "The Rangers" : "The Ballers";
+
+        // Combine all stats to find overall leaders
+        const allStats = [...stats1, ...stats2];
+        const topScorer = allStats.reduce((a, b) => a.points > b.points ? a : b);
+        const sortedByPoints = [...allStats].sort((a, b) => b.points - a.points);
+        const secondScorer = sortedByPoints[1];
+        const topRebounder = allStats.reduce((a, b) => a.rebounds > b.rebounds ? a : b);
+        const topAssister = allStats.reduce((a, b) => a.assists > b.assists ? a : b);
+        const topStealer = allStats.reduce((a, b) => a.steals > b.steals ? a : b);
+        const topBlocker = allStats.reduce((a, b) => a.blocks > b.blocks ? a : b);
+
+        // Select random template
+        const template = articleTemplates[Math.floor(Math.random() * articleTemplates.length)];
+
+        // Replace placeholders
+        const replacements = {
+          '{winnerName}': winnerName,
+          '{loserName}': loserName,
+          '{winnerScore}': winnerScore,
+          '{loserScore}': loserScore,
+          '{margin}': Math.abs(winnerScore - loserScore),
+          '{topScorer}': topScorer.name,
+          '{topScorerPoints}': topScorer.points,
+          '{secondScorer}': secondScorer.name,
+          '{secondScorerPoints}': secondScorer.points,
+          '{topRebounder}': topRebounder.name,
+          '{topRebounds}': topRebounder.rebounds,
+          '{topAssister}': topAssister.name,
+          '{topAssists}': topAssister.assists,
+          '{topStealer}': topStealer.name,
+          '{topSteals}': topStealer.steals,
+          '{topBlocker}': topBlocker.name,
+          '{topBlocks}': topBlocker.blocks
+        };
+
+        const fillTemplate = (text) => {
+          let result = text;
+          for (const [placeholder, value] of Object.entries(replacements)) {
+            result = result.split(placeholder).join(value);
+          }
+          return result;
+        };
+
+        return {
+          headline: fillTemplate(template.headline),
+          subheadline: fillTemplate(template.subheadline),
+          body: fillTemplate(template.body)
+        };
+      };
 
       const loadingMessages = [
         "TIPOFF!",
@@ -253,8 +391,11 @@
 
         setTeam1Score(score1);
         setTeam2Score(score2);
-        setTeam1Stats(generateStats(team1Players, score1));
-        setTeam2Stats(generateStats(team2Players, score2));
+        const stats1 = generateStats(team1Players, score1);
+        const stats2 = generateStats(team2Players, score2);
+        setTeam1Stats(stats1);
+        setTeam2Stats(stats2);
+        setArticle(generateArticle(stats1, stats2, score1, score2));
         setGameState('loading');
         setCountdown(10);
         setLoadingPhase(0);
@@ -287,6 +428,7 @@
         setLoadingPhase(0);
         setShowStats(false);
         setErrorMessage('');
+        setArticle(null);
       };
 
       const updatePlayer = (team, index, value) => {
@@ -879,6 +1021,70 @@
                         </div>
                       ))}
                     </div>
+                  </div>
+                </div>
+              )}
+
+              {/* News Article */}
+              {showStats && article && (
+                <div style={{
+                  marginTop: '50px',
+                  animation: 'slideIn 0.6s ease-out 0.3s both'
+                }}>
+                  <div className="team-card" style={{
+                    maxWidth: '900px',
+                    margin: '0 auto',
+                    background: 'linear-gradient(180deg, rgba(40, 40, 60, 0.95) 0%, rgba(25, 25, 40, 0.98) 100%)',
+                    border: '2px solid rgba(255, 170, 0, 0.3)'
+                  }}>
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '12px',
+                      marginBottom: '20px',
+                      paddingBottom: '15px',
+                      borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+                    }}>
+                      <span style={{ fontSize: '24px' }}>📰</span>
+                      <span style={{
+                        fontFamily: 'Orbitron, sans-serif',
+                        fontSize: '14px',
+                        color: '#ffaa00',
+                        letterSpacing: '3px'
+                      }}>HOOPS SHOWDOWN NEWS</span>
+                    </div>
+
+                    <h2 style={{
+                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontSize: 'clamp(24px, 5vw, 36px)',
+                      color: '#fff',
+                      letterSpacing: '2px',
+                      lineHeight: 1.2,
+                      marginBottom: '12px'
+                    }}>
+                      {article.headline}
+                    </h2>
+
+                    <h3 style={{
+                      fontFamily: 'Rajdhani, sans-serif',
+                      fontSize: 'clamp(16px, 3vw, 20px)',
+                      color: '#ffaa00',
+                      fontWeight: 600,
+                      marginBottom: '20px',
+                      letterSpacing: '1px'
+                    }}>
+                      {article.subheadline}
+                    </h3>
+
+                    <p style={{
+                      fontFamily: 'Rajdhani, sans-serif',
+                      fontSize: 'clamp(15px, 2.5vw, 18px)',
+                      color: 'rgba(255, 255, 255, 0.85)',
+                      lineHeight: 1.7,
+                      fontWeight: 500
+                    }}>
+                      {article.body}
+                    </p>
                   </div>
                 </div>
               )}
