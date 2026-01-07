@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BACtrack View - Blog Staging</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0a1628 0%, #1a2d4a 50%, #0d1f3c 100%);
+      min-height: 100vh;
+      color: #e8eef5;
+      line-height: 1.6;
+    }
+
+    /* Header */
+    .header {
+      background: rgba(10, 22, 40, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 168, 255, 0.2);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #00a8ff 0%, #0066cc 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: white;
+      box-shadow: 0 4px 15px rgba(0, 168, 255, 0.3);
+    }
+
+    .logo-text {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .logo-text span {
+      color: #00a8ff;
+    }
+
+    .staging-badge {
+      background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: linear-gradient(180deg, rgba(0, 168, 255, 0.1) 0%, transparent 100%);
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #ffffff 0%, #00a8ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: #8fa8c8;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      margin-top: 2rem;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #00a8ff;
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: #6b8299;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Main Content */
+    .main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem 4rem;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(0, 168, 255, 0.2);
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .filter-badge {
+      background: rgba(0, 168, 255, 0.15);
+      color: #00a8ff;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    /* Article Grid */
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .article-card {
+      background: linear-gradient(145deg, rgba(26, 45, 74, 0.8) 0%, rgba(13, 31, 60, 0.9) 100%);
+      border: 1px solid rgba(0, 168, 255, 0.15);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .article-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0, 168, 255, 0.4);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(0, 168, 255, 0.1);
+    }
+
+    .article-image {
+      height: 180px;
+      background: linear-gradient(135deg, #1a3a5c 0%, #0d2840 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .article-image::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300a8ff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .article-icon {
+      font-size: 3rem;
+      z-index: 1;
+    }
+
+    .article-category {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: rgba(0, 168, 255, 0.9);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .article-status {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(255, 193, 7, 0.9);
+      color: #1a1a1a;
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .article-content {
+      padding: 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .article-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+      line-height: 1.4;
+    }
+
+    .article-excerpt {
+      font-size: 0.9rem;
+      color: #8fa8c8;
+      margin-bottom: 1rem;
+      flex-grow: 1;
+    }
+
+    .article-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(0, 168, 255, 0.1);
+      font-size: 0.8rem;
+      color: #6b8299;
+    }
+
+    .article-date {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .read-time {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Featured Article */
+    .featured-article {
+      grid-column: span 2;
+    }
+
+    .featured-article .article-image {
+      height: 250px;
+    }
+
+    .featured-article .article-title {
+      font-size: 1.4rem;
+    }
+
+    @media (max-width: 768px) {
+      .featured-article {
+        grid-column: span 1;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero-stats {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .header-content {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+
+    /* Footer */
+    .footer {
+      background: rgba(10, 22, 40, 0.95);
+      border-top: 1px solid rgba(0, 168, 255, 0.2);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .footer-logo span {
+      color: #00a8ff;
+    }
+
+    .footer-text {
+      color: #6b8299;
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer-disclaimer {
+      background: rgba(255, 107, 53, 0.1);
+      border: 1px solid rgba(255, 107, 53, 0.3);
+      border-radius: 8px;
+      padding: 1rem;
+      color: #ff9f6b;
+      font-size: 0.8rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Notice Banner */
+    .notice-banner {
+      background: linear-gradient(90deg, rgba(255, 107, 53, 0.15) 0%, rgba(247, 147, 30, 0.15) 100%);
+      border: 1px solid rgba(255, 107, 53, 0.3);
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .notice-icon {
+      font-size: 1.5rem;
+    }
+
+    .notice-text {
+      color: #ffb380;
+      font-size: 0.9rem;
+    }
+
+    .notice-text strong {
+      color: #ff9f6b;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <div class="logo">
+        <div class="logo-icon">BT</div>
+        <div class="logo-text">BACtrack <span>View</span></div>
+      </div>
+      <div class="staging-badge">⚙️ Staging Environment</div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Blog Article Staging</h1>
+    <p>Preview and review blog content before publishing to the live BACtrack website. All articles below are in draft status.</p>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-number">20</div>
+        <div class="stat-label">Articles Queued</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">5</div>
+        <div class="stat-label">Categories</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">Q1</div>
+        <div class="stat-label">2025 Launch</div>
+      </div>
+    </div>
+  </section>
+
+  <main class="main">
+    <div class="notice-banner">
+      <span class="notice-icon">📋</span>
+      <p class="notice-text"><strong>Internal Use Only:</strong> This staging page is for content review purposes. Article links will be updated with live URLs once content is approved and published.</p>
+    </div>
+
+    <div class="section-header">
+      <h2 class="section-title">Staged Articles</h2>
+      <span class="filter-badge">All Categories</span>
+    </div>
+
+    <div class="articles-grid">
+      <!-- Featured Article 1 -->
+      <a href="#article-1" class="article-card featured-article">
+        <div class="article-image">
+          <span class="article-category">Featured</span>
+          <span class="article-status">Draft</span>
+          <span class="article-icon">🔬</span>
+        </div>
+        <div class="article-content">
+          <h3 class="article-title">The Science Behind Breath Alcohol Testing: How BACtrack Technology Works</h3>
+          <p class="article-excerpt">Dive deep into the electrochemical fuel cell technology that powers BACtrack breathalyzers and learn why accuracy matters for personal safety decisions.</p>
+          <div class="article-meta">
+            <span class="article-date">📅 Scheduled: Jan 15, 2025</span>
+            <span class="read-time">⏱️ 8 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 2 -->
+      <a href="#article-2" class="article-card">
+        <div class="article-image">
+          <span class="article-category">Health</span>
+          <span class="article-status">Draft</span>
+          <span class="article-icon">❤️</span>
+        </div>
+        <div class="article-content">
+          <h3 class="article-title">Understanding Blood Alcohol Content: What the Numbers Really Mean</h3>
+          <p class="article-excerpt">A comprehensive guide to interpreting BAC levels and understanding their effects on your body and cognitive function.</p>
+          <div class="article-meta">
+            <span class="article-date">📅 Scheduled: Jan 22, 2025</span>
+            <span class="read-time">⏱️ 6 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 3 -->
+      <a href="#article-3" class="article-card">
+        <div class="article-image">
+          <span class="article-category">Safety</span>
+          <span class="article-status">Draft</span>
+          <span class="article-icon">🚗</span>
+        </div>
+        <div class="article-content">
+          <h3 class="article-title">Making Smarter Decisions: How Personal Breathalyzers Save Lives</h3>
+          <p class="article-excerpt">Real stories from BACtrack users who credit personal breath testing with helping them make responsible choices.</p>
+          <div class="article-meta">
+            <span class="article-date">📅 Scheduled: Jan 29, 2025</span>
+            <span class="read-time">⏱️ 5 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 4 -->
+      <a href="#article-4" class="article-card">
+        <div class="article-image">
+          <span class="article-category">Product</span>
+          <span class="article-status">Draft</span>
+          <span class="article-icon">📱</span>
+        </div>
+        <div class="article-content">
+          <h3 class="article-title">BACtrack View App: Your Complete Guide to Connected Breath Testing</h3>
+          <p class="article-excerpt">Master all the features of the BACtrack View app, from tracking your results over time to setting personalized alerts.</p>
+          <div class="article-meta">
+            <span class="article-date">📅 Scheduled: Feb 5, 2025</span>
+            <span class="read-time">⏱️ 7 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 5 -->
+      <a href="#article-5" class="article-card">
+        <div class="article-image">
+          <span class="article-category">Wellness</span>
+          <span class="article-status">Draft</span>
+          <span class="article-icon">🍷</span>
+        </div>
+        <div class="article-content">
+          <h3 class="article-title">Alcohol and Sleep: How Drinking Affects Your Rest Quality</h3>
+          <p class="article-excerpt">Explore the surprising ways alcohol impacts your sleep cycles and learn strategies for better rest.</p>
+          <div class="article-meta">
+            <span class="article-date">📅 Scheduled: Feb 12, 2025</span>
+            <span class="read-time">⏱️ 6 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 6 -->
+      <a href="#article-6" class="article-card">
+        <div class="article-image">
+          <span class="article-category">Health</span>
+          <span class="article-status">Draft</span>
+          <span class="article-icon">⚖️</span>
+        </div>
+        <div class="article-content">
+          <h3 class="article-title">Body Weight, Gender, and BAC: Understanding Personal Factors</h3>
+          <p class="article-excerpt">Why the same number of drinks affects people differently and how to understand your personal alcohol metabolism.</p>
+          <div class="article-meta">
+            <span class="article-date">📅 Scheduled: Feb 19, 2025</span>
+            <span class="read-time">⏱️ 5 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 7 -->
+      <a href="#article-7" class="article-card">
+        <div class="article-image">
+          <span class="article-category">Product</span>
+          <span class="article-status">Draft</span>
+          <span class="article-icon">🔋</span>
+        </div>
+        <div class="article-content">
+          <h3 class="article-title">Caring for Your BACtrack: Maintenance Tips for Accuracy</h3>
+          <p class="article-excerpt">Keep your breathalyzer performing at its best with these essential care and calibration guidelines.</p>
+          <div class="article-meta">
+            <span class="article-date">📅 Scheduled: Feb 26, 2025</span>
+            <span class="read-time">⏱️ 4 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 8 -->
+      <a href="#article-8" class="article-card">
+        <div class="article-image">
+          <span class="article-category">Safety</span>
+          <span class="article-status">Draft</span>
+          <span class="article-icon">🎉</span>
+        </div>
+        <div class="article-content">
+          <h3 class="article-title">Party Planning with Safety in Mind: A Host's Guide</h3>
+          <p class="article-excerpt">How to be a responsible host by incorporating breath testing and ensuring all guests get home safely.</p>
+          <div class="article-meta">
+            <span class="article-date">📅 Scheduled: Mar 5, 2025</span>
+            <span class="read-time">⏱️ 6 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 9 -->
+      <a href="#article-9" class="article-card">
+        <div class="article-image">
+          <span class="article-category">Wellness</span>
+          <span class="article-status">Draft</span>
+          <span class="article-icon">🏃</span>
+        </div>
+        <div class="article-content">
+          <h3 class="article-title">Alcohol and Athletic Performance: What Athletes Need to Know</h3>
+          <p class="article-excerpt">The impact of alcohol on training, recovery, and competition performance for recreational and professional athletes.</p>
+          <div class="article-meta">
+            <span class="article-date">📅 Scheduled: Mar 12, 2025</span>
+            <span class="read-time">⏱️ 7 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 10 -->
+      <a href="#article-10" class="article-card">
+        <div class="article-image">
+          <span class="article-category">Health</span>
+          <span class="article-status">Draft</span>
+          <span class="article-icon">🧠</span>
+        </div>
+        <div class="article-content">
+          <h3 class="article-title">The Cognitive Effects of Alcohol: Impairment Before You Feel It</h3>
+          <p class="article-excerpt">Scientific research shows impairment begins well before most people "feel drunk" – here's what happens in your brain.</p>
+          <div class="article-meta">
+            <span class="article-date">📅 Scheduled: Mar 19, 2025</span>
+            <span class="read-time">⏱️ 8 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 11 -->
+      <a href="#article-11" class="article-card">
+        <div class="article-image">
+          <span class="article-category">Product</span>
+          <span class="article-status">Draft</span>
+          <span class="article-icon">⭐</span>
+        </div>
+        <div class="article-content">
+          <h3 class="article-title">BACtrack Product Comparison: Finding Your Perfect Match</h3>
+          <p class="article-excerpt">From keychain models to professional-grade devices, find the BACtrack breathalyzer that fits your lifestyle.</p>
+          <div class="article-meta">
+            <span class="article-date">📅 Scheduled: Mar 26, 2025</span>
+            <span class="read-time">⏱️ 5 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 12 -->
+      <a href="#article-12" class="article-card">
+        <div class="article-image">
+          <span class="article-category">Safety</span>
+          <span class="article-status">Draft</span>
+          <span class="article-icon">📊</span>
+        </div>
+        <div class="article-content">
+          <h3 class="article-title">DUI Laws by State: A Comprehensive Legal Guide</h3>
+          <p class="article-excerpt">Understanding the legal BAC limits and consequences across all 50 states to stay informed and compliant.</p>
+          <div class="article-meta">
+            <span class="article-date">📅 Scheduled: Apr 2, 2025</span>
+            <span class="read-time">⏱️ 10 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 13 -->
+      <a href="#article-13" class="article-card">
+        <div class="article-image">
+          <span class="article-category">Wellness</span>
+          <span class="article-status">Draft</span>
+          <span class="article-icon">🥗</span>
+        </div>
+        <div class="article-content">
+          <h3 class="article-title">Food and Alcohol: How What You Eat Affects Your BAC</h3>
+          <p class="article-excerpt">The science of alcohol absorption and why eating before drinking makes a significant difference.</p>
+          <div class="article-meta">
+            <span class="article-date">📅 Scheduled: Apr 9, 2025</span>
+            <span class="read-time">⏱️ 5 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 14 -->
+      <a href="#article-14" class="article-card">
+        <div class="article-image">
+          <span class="article-category">Health</span>
+          <span class="article-status">Draft</span>
+          <span class="article-icon">💊</span>
+        </div>
+        <div class="article-content">
+          <h3 class="article-title">Alcohol and Medications: Dangerous Combinations to Avoid</h3>
+          <p class="article-excerpt">Critical information about how alcohol interacts with common prescription and over-the-counter medications.</p>
+          <div class="article-meta">
+            <span class="article-date">📅 Scheduled: Apr 16, 2025</span>
+            <span class="read-time">⏱️ 7 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 15 -->
+      <a href="#article-15" class="article-card">
+        <div class="article-image">
+          <span class="article-category">Product</span>
+          <span class="article-status">Draft</span>
+          <span class="article-icon">🏢</span>
+        </div>
+        <div class="article-content">
+          <h3 class="article-title">Workplace Alcohol Testing: Solutions for Businesses</h3>
+          <p class="article-excerpt">How companies are using BACtrack professional devices to maintain safe, productive work environments.</p>
+          <div class="article-meta">
+            <span class="article-date">📅 Scheduled: Apr 23, 2025</span>
+            <span class="read-time">⏱️ 6 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 16 -->
+      <a href="#article-16" class="article-card">
+        <div class="article-image">
+          <span class="article-category">Safety</span>
+          <span class="article-status">Draft</span>
+          <span class="article-icon">⛵</span>
+        </div>
+        <div class="article-content">
+          <h3 class="article-title">Boating Under the Influence: Maritime Safety and the Law</h3>
+          <p class="article-excerpt">BUI laws are just as serious as DUI – understand the regulations and risks of drinking on the water.</p>
+          <div class="article-meta">
+            <span class="article-date">📅 Scheduled: Apr 30, 2025</span>
+            <span class="read-time">⏱️ 6 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 17 -->
+      <a href="#article-17" class="article-card">
+        <div class="article-image">
+          <span class="article-category">Wellness</span>
+          <span class="article-status">Draft</span>
+          <span class="article-icon">📈</span>
+        </div>
+        <div class="article-content">
+          <h3 class="article-title">Tracking Your Drinking Habits: Using Data for Healthier Choices</h3>
+          <p class="article-excerpt">How the BACtrack app's history feature helps you identify patterns and make informed decisions about alcohol.</p>
+          <div class="article-meta">
+            <span class="article-date">📅 Scheduled: May 7, 2025</span>
+            <span class="read-time">⏱️ 5 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 18 -->
+      <a href="#article-18" class="article-card">
+        <div class="article-image">
+          <span class="article-category">Health</span>
+          <span class="article-status">Draft</span>
+          <span class="article-icon">🕐</span>
+        </div>
+        <div class="article-content">
+          <h3 class="article-title">How Long Does Alcohol Stay in Your System? The Complete Timeline</h3>
+          <p class="article-excerpt">Understanding alcohol metabolism rates and how long it actually takes to return to 0.00% BAC.</p>
+          <div class="article-meta">
+            <span class="article-date">📅 Scheduled: May 14, 2025</span>
+            <span class="read-time">⏱️ 6 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 19 -->
+      <a href="#article-19" class="article-card">
+        <div class="article-image">
+          <span class="article-category">Product</span>
+          <span class="article-status">Draft</span>
+          <span class="article-icon">🎓</span>
+        </div>
+        <div class="article-content">
+          <h3 class="article-title">BACtrack in Education: Campus Alcohol Awareness Programs</h3>
+          <p class="article-excerpt">How universities are partnering with BACtrack to promote responsible drinking among students.</p>
+          <div class="article-meta">
+            <span class="article-date">📅 Scheduled: May 21, 2025</span>
+            <span class="read-time">⏱️ 5 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 20 -->
+      <a href="#article-20" class="article-card">
+        <div class="article-image">
+          <span class="article-category">Safety</span>
+          <span class="article-status">Draft</span>
+          <span class="article-icon">🌍</span>
+        </div>
+        <div class="article-content">
+          <h3 class="article-title">Global Perspectives: BAC Limits and Drinking Culture Worldwide</h3>
+          <p class="article-excerpt">A look at how different countries approach alcohol regulation and what we can learn from international policies.</p>
+          <div class="article-meta">
+            <span class="article-date">📅 Scheduled: May 28, 2025</span>
+            <span class="read-time">⏱️ 8 min read</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">BACtrack <span>View</span></div>
+      <p class="footer-text">Professional-Grade Personal Breathalyzers</p>
+      <div class="footer-disclaimer">
+        ⚠️ This is a staging environment for internal content review. Articles displayed here are drafts and have not been published. Do not share this URL externally.
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
