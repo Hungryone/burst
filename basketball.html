@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🏀 Hoops Showdown - Basketball Simulator</title>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Bebas Neue', 'Impact', sans-serif;
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0f0f1a 100%);
+      min-height: 100vh;
+      color: #fff;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.02); }
+    }
+
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(255, 107, 0, 0.5), 0 0 40px rgba(255, 107, 0, 0.3); }
+      50% { box-shadow: 0 0 30px rgba(255, 107, 0, 0.8), 0 0 60px rgba(255, 107, 0, 0.5); }
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes scoreReveal {
+      0% { transform: scale(0); opacity: 0; }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    @keyframes countdownPulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.5); opacity: 0.5; }
+      100% { transform: scale(2); opacity: 0; }
+    }
+
+    @keyframes statsSlide {
+      from { transform: translateX(-100px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes borderGlow {
+      0%, 100% { border-color: #ff6b00; }
+      50% { border-color: #ffaa00; }
+    }
+
+    .team-card {
+      background: linear-gradient(180deg, rgba(30, 30, 50, 0.95) 0%, rgba(20, 20, 35, 0.98) 100%);
+      border-radius: 20px;
+      padding: 30px;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .team-card:hover {
+      border-color: rgba(255, 107, 0, 0.5);
+      transform: translateY(-5px);
+    }
+
+    .player-input {
+      width: 100%;
+      padding: 15px 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      color: #fff;
+      font-size: 16px;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      outline: none;
+    }
+
+    .player-input:focus {
+      border-color: #ff6b00;
+      background: rgba(255, 107, 0, 0.1);
+      box-shadow: 0 0 20px rgba(255, 107, 0, 0.3);
+    }
+
+    .player-input::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .start-button {
+      background: linear-gradient(135deg, #ff6b00 0%, #ff8c00 50%, #ffaa00 100%);
+      border: none;
+      padding: 20px 60px;
+      font-size: 28px;
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 4px;
+      color: #000;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      animation: glow 2s ease-in-out infinite;
+    }
+
+    .start-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 50px rgba(255, 107, 0, 0.8);
+    }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+      padding: 12px 15px;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .stat-row:hover {
+      background: rgba(255, 107, 0, 0.1);
+    }
+
+    .play-again {
+      background: transparent;
+      border: 3px solid #ff6b00;
+      padding: 18px 50px;
+      font-size: 24px;
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 3px;
+      color: #ff6b00;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      animation: borderGlow 2s ease-in-out infinite;
+    }
+
+    .play-again:hover {
+      background: #ff6b00;
+      color: #000;
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 900px) {
+      .teams-grid {
+        grid-template-columns: 1fr !important;
+        gap: 30px !important;
+      }
+
+      .score-display {
+        flex-direction: column !important;
+        gap: 20px !important;
+      }
+
+      .score-number {
+        font-size: 60px !important;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr !important;
+      }
+
+      .stat-row {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    const BasketballSimulator = () => {
+      const [gameState, setGameState] = useState('setup');
+      const [team1Players, setTeam1Players] = useState(['', '', '', '', '']);
+      const [team2Players, setTeam2Players] = useState(['', '', '', '', '']);
+      const [team1Stats, setTeam1Stats] = useState([]);
+      const [team2Stats, setTeam2Stats] = useState([]);
+      const [team1Score, setTeam1Score] = useState(0);
+      const [team2Score, setTeam2Score] = useState(0);
+      const [countdown, setCountdown] = useState(10);
+      const [loadingPhase, setLoadingPhase] = useState(0);
+      const [showStats, setShowStats] = useState(false);
+      const [errorMessage, setErrorMessage] = useState('');
+
+      const loadingMessages = [
+        "TIPOFF!",
+        "First Quarter...",
+        "Second Quarter...",
+        "HALFTIME",
+        "Third Quarter...",
+        "Fourth Quarter...",
+        "FINAL SECONDS!",
+        "BUZZER BEATER?!",
+        "GAME OVER!",
+        "CALCULATING STATS..."
+      ];
+
+      const generateStats = (players, totalScore) => {
+        const stats = [];
+        let remainingPoints = totalScore;
+
+        players.forEach((player, index) => {
+          const isLast = index === players.length - 1;
+          const maxPoints = isLast ? remainingPoints : Math.min(remainingPoints - (players.length - index - 1), Math.floor(remainingPoints * 0.6));
+          const minPoints = isLast ? remainingPoints : Math.max(0, Math.floor(remainingPoints / (players.length - index) * 0.3));
+          const points = isLast ? remainingPoints : Math.floor(Math.random() * (maxPoints - minPoints + 1)) + minPoints;
+          remainingPoints -= points;
+
+          stats.push({
+            name: player,
+            points: points,
+            rebounds: Math.floor(Math.random() * 15),
+            assists: Math.floor(Math.random() * 12),
+            steals: Math.floor(Math.random() * 5),
+            blocks: Math.floor(Math.random() * 4)
+          });
+        });
+
+        return stats.sort((a, b) => b.points - a.points);
+      };
+
+      const startGame = () => {
+        const allTeam1Filled = team1Players.every(p => p.trim() !== '');
+        const allTeam2Filled = team2Players.every(p => p.trim() !== '');
+
+        if (!allTeam1Filled || !allTeam2Filled) {
+          setErrorMessage('Please fill in all 5 player names for BOTH teams!');
+          setTimeout(() => setErrorMessage(''), 4000);
+          return;
+        }
+
+        setErrorMessage('');
+        const score1 = Math.floor(Math.random() * 40) + 90;
+        const score2 = Math.floor(Math.random() * 40) + 90;
+
+        setTeam1Score(score1);
+        setTeam2Score(score2);
+        setTeam1Stats(generateStats(team1Players, score1));
+        setTeam2Stats(generateStats(team2Players, score2));
+        setGameState('loading');
+        setCountdown(10);
+        setLoadingPhase(0);
+      };
+
+      useEffect(() => {
+        if (gameState === 'loading' && countdown > 0) {
+          const timer = setTimeout(() => {
+            setCountdown(countdown - 1);
+            setLoadingPhase(10 - countdown);
+          }, 1000);
+          return () => clearTimeout(timer);
+        } else if (gameState === 'loading' && countdown === 0) {
+          setTimeout(() => {
+            setGameState('results');
+            setTimeout(() => setShowStats(true), 800);
+          }, 500);
+        }
+      }, [gameState, countdown]);
+
+      const resetGame = () => {
+        setGameState('setup');
+        setTeam1Players(['', '', '', '', '']);
+        setTeam2Players(['', '', '', '', '']);
+        setTeam1Stats([]);
+        setTeam2Stats([]);
+        setTeam1Score(0);
+        setTeam2Score(0);
+        setCountdown(10);
+        setLoadingPhase(0);
+        setShowStats(false);
+        setErrorMessage('');
+      };
+
+      const updatePlayer = (team, index, value) => {
+        if (team === 1) {
+          const newPlayers = [...team1Players];
+          newPlayers[index] = value;
+          setTeam1Players(newPlayers);
+        } else {
+          const newPlayers = [...team2Players];
+          newPlayers[index] = value;
+          setTeam2Players(newPlayers);
+        }
+      };
+
+      return (
+        <div style={{
+          minHeight: '100vh',
+          position: 'relative'
+        }}>
+          {/* Background Effects */}
+          <div style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'radial-gradient(circle at 20% 20%, rgba(255, 107, 0, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(0, 150, 255, 0.1) 0%, transparent 50%)',
+            pointerEvents: 'none',
+            zIndex: 0
+          }} />
+
+          {/* Header */}
+          <header style={{
+            padding: '30px 40px',
+            textAlign: 'center',
+            borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+            background: 'rgba(0, 0, 0, 0.3)',
+            position: 'relative',
+            zIndex: 1
+          }}>
+            <h1 style={{
+              fontSize: 'clamp(32px, 8vw, 64px)',
+              fontFamily: 'Orbitron, sans-serif',
+              fontWeight: 900,
+              letterSpacing: '8px',
+              margin: 0,
+              background: 'linear-gradient(135deg, #ff6b00 0%, #ffaa00 50%, #ff6b00 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text'
+            }}>
+              🏀 HOOPS SHOWDOWN 🏀
+            </h1>
+            <p style={{
+              fontFamily: 'Rajdhani, sans-serif',
+              fontSize: '18px',
+              color: 'rgba(255, 255, 255, 0.6)',
+              letterSpacing: '4px',
+              marginTop: '10px'
+            }}>
+              BUILD YOUR DREAM TEAM • SIMULATE THE GAME
+            </p>
+          </header>
+
+          {/* Setup Screen */}
+          {gameState === 'setup' && (
+            <div style={{
+              padding: '50px 20px',
+              maxWidth: '1400px',
+              margin: '0 auto',
+              animation: 'slideIn 0.6s ease-out',
+              position: 'relative',
+              zIndex: 1
+            }}>
+              <div className="teams-grid" style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr',
+                gap: '50px'
+              }}>
+                {/* Team 1 */}
+                <div className="team-card">
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    marginBottom: '30px',
+                    gap: '15px'
+                  }}>
+                    <div style={{
+                      width: '60px',
+                      height: '60px',
+                      borderRadius: '50%',
+                      background: 'linear-gradient(135deg, #ff6b00, #ffaa00)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '30px',
+                      flexShrink: 0
+                    }}>🔥</div>
+                    <div>
+                      <h2 style={{
+                        fontFamily: 'Orbitron, sans-serif',
+                        fontSize: 'clamp(20px, 4vw, 32px)',
+                        margin: 0,
+                        color: '#ff6b00',
+                        letterSpacing: '3px'
+                      }}>THE BALLERS</h2>
+                      <p style={{
+                        fontFamily: 'Rajdhani, sans-serif',
+                        color: 'rgba(255, 255, 255, 0.5)',
+                        margin: 0,
+                        fontSize: '14px',
+                        letterSpacing: '2px'
+                      }}>TEAM 1</p>
+                    </div>
+                  </div>
+
+                  {team1Players.map((player, index) => (
+                    <div key={index} style={{ marginBottom: '15px' }}>
+                      <label style={{
+                        fontFamily: 'Rajdhani, sans-serif',
+                        fontSize: '12px',
+                        color: 'rgba(255, 255, 255, 0.4)',
+                        letterSpacing: '2px',
+                        display: 'block',
+                        marginBottom: '5px'
+                      }}>
+                        PLAYER {index + 1}
+                      </label>
+                      <input
+                        type="text"
+                        className="player-input"
+                        placeholder="Enter NBA player name..."
+                        value={player}
+                        onChange={(e) => updatePlayer(1, index, e.target.value)}
+                      />
+                    </div>
+                  ))}
+                </div>
+
+                {/* Team 2 */}
+                <div className="team-card">
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    marginBottom: '30px',
+                    gap: '15px'
+                  }}>
+                    <div style={{
+                      width: '60px',
+                      height: '60px',
+                      borderRadius: '50%',
+                      background: 'linear-gradient(135deg, #0088ff, #00d4ff)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '30px',
+                      flexShrink: 0
+                    }}>⚡</div>
+                    <div>
+                      <h2 style={{
+                        fontFamily: 'Orbitron, sans-serif',
+                        fontSize: 'clamp(20px, 4vw, 32px)',
+                        margin: 0,
+                        color: '#0088ff',
+                        letterSpacing: '3px'
+                      }}>THE RANGERS</h2>
+                      <p style={{
+                        fontFamily: 'Rajdhani, sans-serif',
+                        color: 'rgba(255, 255, 255, 0.5)',
+                        margin: 0,
+                        fontSize: '14px',
+                        letterSpacing: '2px'
+                      }}>TEAM 2</p>
+                    </div>
+                  </div>
+
+                  {team2Players.map((player, index) => (
+                    <div key={index} style={{ marginBottom: '15px' }}>
+                      <label style={{
+                        fontFamily: 'Rajdhani, sans-serif',
+                        fontSize: '12px',
+                        color: 'rgba(255, 255, 255, 0.4)',
+                        letterSpacing: '2px',
+                        display: 'block',
+                        marginBottom: '5px'
+                      }}>
+                        PLAYER {index + 1}
+                      </label>
+                      <input
+                        type="text"
+                        className="player-input"
+                        placeholder="Enter NBA player name..."
+                        value={player}
+                        onChange={(e) => updatePlayer(2, index, e.target.value)}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div style={{ textAlign: 'center', marginTop: '50px' }}>
+                {errorMessage && (
+                  <div style={{
+                    background: 'rgba(255, 50, 50, 0.2)',
+                    border: '2px solid #ff4444',
+                    borderRadius: '12px',
+                    padding: '15px 30px',
+                    marginBottom: '20px',
+                    display: 'inline-block',
+                    animation: 'shake 0.5s ease-in-out'
+                  }}>
+                    <span style={{
+                      fontFamily: 'Rajdhani, sans-serif',
+                      fontSize: '18px',
+                      fontWeight: 700,
+                      color: '#ff6666',
+                      letterSpacing: '1px'
+                    }}>
+                      ⚠️ {errorMessage}
+                    </span>
+                  </div>
+                )}
+                <div>
+                  <button className="start-button" onClick={startGame}>
+                    TIP OFF! 🏀
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Loading/Dramatic Sequence */}
+          {gameState === 'loading' && (
+            <div style={{
+              height: 'calc(100vh - 140px)',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'relative',
+              zIndex: 1
+            }}>
+              {/* Court Lines Animation Background */}
+              <div style={{
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
+                opacity: 0.1,
+                background: `
+                  linear-gradient(90deg, transparent 49%, #ff6b00 49%, #ff6b00 51%, transparent 51%),
+                  radial-gradient(circle, transparent 150px, #ff6b00 150px, #ff6b00 153px, transparent 153px)
+                `,
+                backgroundSize: '100% 100%, 300px 300px',
+                backgroundPosition: 'center center',
+                animation: 'pulse 2s ease-in-out infinite'
+              }} />
+
+              {/* Countdown */}
+              <div style={{
+                position: 'relative',
+                marginBottom: '40px'
+              }}>
+                <div style={{
+                  fontSize: 'clamp(100px, 25vw, 200px)',
+                  fontFamily: 'Orbitron, sans-serif',
+                  fontWeight: 900,
+                  color: '#ff6b00',
+                  textShadow: '0 0 50px rgba(255, 107, 0, 0.8), 0 0 100px rgba(255, 107, 0, 0.4)',
+                  animation: countdown > 0 ? 'shake 0.1s ease-in-out infinite' : 'scoreReveal 0.5s ease-out'
+                }}>
+                  {countdown > 0 ? countdown : '🏀'}
+                </div>
+                {countdown > 0 && (
+                  <div style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '250px',
+                    height: '250px',
+                    border: '4px solid rgba(255, 107, 0, 0.3)',
+                    borderRadius: '50%',
+                    animation: 'countdownPulse 1s ease-out infinite'
+                  }} />
+                )}
+              </div>
+
+              {/* Loading Message */}
+              <div style={{
+                fontSize: 'clamp(24px, 5vw, 36px)',
+                fontFamily: 'Bebas Neue, sans-serif',
+                letterSpacing: '6px',
+                color: loadingPhase > 7 ? '#ffaa00' : '#fff',
+                animation: 'pulse 0.5s ease-in-out infinite',
+                textShadow: '0 0 20px rgba(255, 255, 255, 0.3)',
+                textAlign: 'center',
+                padding: '0 20px'
+              }}>
+                {loadingMessages[loadingPhase]}
+              </div>
+
+              {/* Progress Bar */}
+              <div style={{
+                width: 'min(400px, 80vw)',
+                height: '8px',
+                background: 'rgba(255, 255, 255, 0.1)',
+                borderRadius: '4px',
+                marginTop: '40px',
+                overflow: 'hidden'
+              }}>
+                <div style={{
+                  width: `${(10 - countdown) * 10}%`,
+                  height: '100%',
+                  background: 'linear-gradient(90deg, #ff6b00, #ffaa00)',
+                  borderRadius: '4px',
+                  transition: 'width 0.3s ease-out',
+                  boxShadow: '0 0 20px rgba(255, 107, 0, 0.5)'
+                }} />
+              </div>
+
+              {/* Team Names */}
+              <div style={{
+                display: 'flex',
+                gap: '40px',
+                marginTop: '50px',
+                opacity: 0.8,
+                flexWrap: 'wrap',
+                justifyContent: 'center',
+                padding: '0 20px'
+              }}>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '24px', marginBottom: '5px' }}>🔥</div>
+                  <div style={{
+                    fontFamily: 'Orbitron, sans-serif',
+                    fontSize: 'clamp(14px, 3vw, 20px)',
+                    color: '#ff6b00',
+                    letterSpacing: '2px'
+                  }}>THE BALLERS</div>
+                </div>
+                <div style={{
+                  fontFamily: 'Bebas Neue, sans-serif',
+                  fontSize: '28px',
+                  color: 'rgba(255, 255, 255, 0.3)',
+                  display: 'flex',
+                  alignItems: 'center'
+                }}>VS</div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '24px', marginBottom: '5px' }}>⚡</div>
+                  <div style={{
+                    fontFamily: 'Orbitron, sans-serif',
+                    fontSize: 'clamp(14px, 3vw, 20px)',
+                    color: '#0088ff',
+                    letterSpacing: '2px'
+                  }}>THE RANGERS</div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Results Screen */}
+          {gameState === 'results' && (
+            <div style={{
+              padding: '40px 20px',
+              maxWidth: '1400px',
+              margin: '0 auto',
+              position: 'relative',
+              zIndex: 1
+            }}>
+              {/* Final Score */}
+              <div style={{
+                textAlign: 'center',
+                marginBottom: '50px',
+                animation: 'scoreReveal 0.8s ease-out'
+              }}>
+                <div style={{
+                  fontFamily: 'Rajdhani, sans-serif',
+                  fontSize: '20px',
+                  color: 'rgba(255, 255, 255, 0.5)',
+                  letterSpacing: '8px',
+                  marginBottom: '20px'
+                }}>FINAL SCORE</div>
+
+                <div className="score-display" style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '40px',
+                  flexWrap: 'wrap'
+                }}>
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: '24px', marginBottom: '10px' }}>🔥</div>
+                    <div style={{
+                      fontFamily: 'Orbitron, sans-serif',
+                      fontSize: 'clamp(16px, 3vw, 24px)',
+                      color: '#ff6b00',
+                      letterSpacing: '3px',
+                      marginBottom: '15px'
+                    }}>THE BALLERS</div>
+                    <div className="score-number" style={{
+                      fontFamily: 'Orbitron, sans-serif',
+                      fontSize: 'clamp(60px, 15vw, 100px)',
+                      fontWeight: 900,
+                      color: team1Score > team2Score ? '#ffaa00' : '#fff',
+                      textShadow: team1Score > team2Score ? '0 0 50px rgba(255, 170, 0, 0.8)' : 'none',
+                      lineHeight: 1
+                    }}>{team1Score}</div>
+                    {team1Score > team2Score && (
+                      <div style={{
+                        fontFamily: 'Bebas Neue, sans-serif',
+                        fontSize: '20px',
+                        color: '#ffaa00',
+                        letterSpacing: '4px',
+                        marginTop: '10px',
+                        animation: 'pulse 1s ease-in-out infinite'
+                      }}>🏆 WINNER!</div>
+                    )}
+                  </div>
+
+                  <div style={{
+                    fontFamily: 'Bebas Neue, sans-serif',
+                    fontSize: '40px',
+                    color: 'rgba(255, 255, 255, 0.3)',
+                    padding: '0 20px'
+                  }}>—</div>
+
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: '24px', marginBottom: '10px' }}>⚡</div>
+                    <div style={{
+                      fontFamily: 'Orbitron, sans-serif',
+                      fontSize: 'clamp(16px, 3vw, 24px)',
+                      color: '#0088ff',
+                      letterSpacing: '3px',
+                      marginBottom: '15px'
+                    }}>THE RANGERS</div>
+                    <div className="score-number" style={{
+                      fontFamily: 'Orbitron, sans-serif',
+                      fontSize: 'clamp(60px, 15vw, 100px)',
+                      fontWeight: 900,
+                      color: team2Score > team1Score ? '#00d4ff' : '#fff',
+                      textShadow: team2Score > team1Score ? '0 0 50px rgba(0, 212, 255, 0.8)' : 'none',
+                      lineHeight: 1
+                    }}>{team2Score}</div>
+                    {team2Score > team1Score && (
+                      <div style={{
+                        fontFamily: 'Bebas Neue, sans-serif',
+                        fontSize: '20px',
+                        color: '#00d4ff',
+                        letterSpacing: '4px',
+                        marginTop: '10px',
+                        animation: 'pulse 1s ease-in-out infinite'
+                      }}>🏆 WINNER!</div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Stats Tables */}
+              {showStats && (
+                <div className="stats-grid" style={{
+                  display: 'grid',
+                  gridTemplateColumns: '1fr 1fr',
+                  gap: '40px',
+                  animation: 'slideIn 0.6s ease-out'
+                }}>
+                  {/* Team 1 Stats */}
+                  <div className="team-card">
+                    <h3 style={{
+                      fontFamily: 'Orbitron, sans-serif',
+                      fontSize: 'clamp(16px, 3vw, 22px)',
+                      color: '#ff6b00',
+                      letterSpacing: '3px',
+                      marginBottom: '20px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '10px'
+                    }}>
+                      🔥 THE BALLERS — STATS
+                    </h3>
+
+                    <div style={{
+                      fontFamily: 'Rajdhani, sans-serif',
+                      fontWeight: 700,
+                      overflowX: 'auto'
+                    }}>
+                      <div className="stat-row" style={{
+                        background: 'rgba(255, 107, 0, 0.2)',
+                        borderRadius: '8px 8px 0 0',
+                        color: '#ff6b00',
+                        minWidth: '400px'
+                      }}>
+                        <span>PLAYER</span>
+                        <span style={{ textAlign: 'center' }}>PTS</span>
+                        <span style={{ textAlign: 'center' }}>REB</span>
+                        <span style={{ textAlign: 'center' }}>AST</span>
+                        <span style={{ textAlign: 'center' }}>STL</span>
+                        <span style={{ textAlign: 'center' }}>BLK</span>
+                      </div>
+
+                      {team1Stats.map((player, index) => (
+                        <div
+                          key={index}
+                          className="stat-row"
+                          style={{
+                            animation: `statsSlide 0.4s ease-out ${index * 0.1}s both`,
+                            minWidth: '400px'
+                          }}
+                        >
+                          <span style={{
+                            fontWeight: 600,
+                            color: index === 0 ? '#ffaa00' : '#fff',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis'
+                          }}>{player.name}</span>
+                          <span style={{
+                            textAlign: 'center',
+                            color: '#ff6b00',
+                            fontWeight: 700,
+                            fontSize: '18px'
+                          }}>{player.points}</span>
+                          <span style={{ textAlign: 'center', color: 'rgba(255,255,255,0.7)' }}>{player.rebounds}</span>
+                          <span style={{ textAlign: 'center', color: 'rgba(255,255,255,0.7)' }}>{player.assists}</span>
+                          <span style={{ textAlign: 'center', color: 'rgba(255,255,255,0.7)' }}>{player.steals}</span>
+                          <span style={{ textAlign: 'center', color: 'rgba(255,255,255,0.7)' }}>{player.blocks}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Team 2 Stats */}
+                  <div className="team-card">
+                    <h3 style={{
+                      fontFamily: 'Orbitron, sans-serif',
+                      fontSize: 'clamp(16px, 3vw, 22px)',
+                      color: '#0088ff',
+                      letterSpacing: '3px',
+                      marginBottom: '20px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '10px'
+                    }}>
+                      ⚡ THE RANGERS — STATS
+                    </h3>
+
+                    <div style={{
+                      fontFamily: 'Rajdhani, sans-serif',
+                      fontWeight: 700,
+                      overflowX: 'auto'
+                    }}>
+                      <div className="stat-row" style={{
+                        background: 'rgba(0, 136, 255, 0.2)',
+                        borderRadius: '8px 8px 0 0',
+                        color: '#0088ff',
+                        minWidth: '400px'
+                      }}>
+                        <span>PLAYER</span>
+                        <span style={{ textAlign: 'center' }}>PTS</span>
+                        <span style={{ textAlign: 'center' }}>REB</span>
+                        <span style={{ textAlign: 'center' }}>AST</span>
+                        <span style={{ textAlign: 'center' }}>STL</span>
+                        <span style={{ textAlign: 'center' }}>BLK</span>
+                      </div>
+
+                      {team2Stats.map((player, index) => (
+                        <div
+                          key={index}
+                          className="stat-row"
+                          style={{
+                            animation: `statsSlide 0.4s ease-out ${index * 0.1}s both`,
+                            minWidth: '400px'
+                          }}
+                        >
+                          <span style={{
+                            fontWeight: 600,
+                            color: index === 0 ? '#00d4ff' : '#fff',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis'
+                          }}>{player.name}</span>
+                          <span style={{
+                            textAlign: 'center',
+                            color: '#0088ff',
+                            fontWeight: 700,
+                            fontSize: '18px'
+                          }}>{player.points}</span>
+                          <span style={{ textAlign: 'center', color: 'rgba(255,255,255,0.7)' }}>{player.rebounds}</span>
+                          <span style={{ textAlign: 'center', color: 'rgba(255,255,255,0.7)' }}>{player.assists}</span>
+                          <span style={{ textAlign: 'center', color: 'rgba(255,255,255,0.7)' }}>{player.steals}</span>
+                          <span style={{ textAlign: 'center', color: 'rgba(255,255,255,0.7)' }}>{player.blocks}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Play Again Button */}
+              {showStats && (
+                <div style={{
+                  textAlign: 'center',
+                  marginTop: '50px',
+                  animation: 'slideIn 0.6s ease-out 0.5s both'
+                }}>
+                  <button className="play-again" onClick={resetGame}>
+                    PLAY AGAIN 🔄
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      );
+    };
+
+    ReactDOM.render(<BasketballSimulator />, document.getElementById('root'));
+  </script>
+
+</body>
+</html>
