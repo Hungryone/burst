@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Science Behind Breath Alcohol Testing | BACtrack View Blog</title>
+  <meta name="description" content="Dive deep into the electrochemical fuel cell technology that powers BACtrack breathalyzers and learn why accuracy matters for personal safety decisions.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0a1628 0%, #1a2d4a 50%, #0d1f3c 100%);
+      min-height: 100vh;
+      color: #e8eef5;
+      line-height: 1.8;
+    }
+
+    /* Header */
+    .header {
+      background: rgba(10, 22, 40, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 168, 255, 0.2);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, #00a8ff 0%, #0066cc 100%);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: white;
+      box-shadow: 0 4px 15px rgba(0, 168, 255, 0.3);
+    }
+
+    .logo-text {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .logo-text span {
+      color: #00a8ff;
+    }
+
+    .back-link {
+      color: #00a8ff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover {
+      color: #4dc3ff;
+    }
+
+    /* Article Hero */
+    .article-hero {
+      background: linear-gradient(180deg, rgba(0, 168, 255, 0.15) 0%, transparent 100%);
+      padding: 4rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .article-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%2300a8ff' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    .hero-content {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .article-category {
+      display: inline-block;
+      background: linear-gradient(135deg, #00a8ff 0%, #0066cc 100%);
+      color: white;
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 1.5rem;
+    }
+
+    .article-title {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, #ffffff 0%, #c8dff5 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .article-subtitle {
+      font-size: 1.25rem;
+      color: #8fa8c8;
+      margin-bottom: 2rem;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .article-meta {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      color: #6b8299;
+      font-size: 0.9rem;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .author-avatar {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #00a8ff 0%, #0066cc 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    .author-info {
+      text-align: left;
+    }
+
+    .author-name {
+      color: #ffffff;
+      font-weight: 500;
+    }
+
+    .author-title {
+      font-size: 0.8rem;
+      color: #6b8299;
+    }
+
+    /* Hero Image */
+    .hero-image {
+      max-width: 900px;
+      margin: 3rem auto 0;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(0, 168, 255, 0.2);
+    }
+
+    .hero-image-content {
+      background: linear-gradient(145deg, #1a3a5c 0%, #0d2840 100%);
+      padding: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 400px;
+      position: relative;
+    }
+
+    /* Breathalyzer Illustration */
+    .breathalyzer-illustration {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .breathalyzer-svg {
+      width: 100%;
+      height: auto;
+    }
+
+    /* Main Content */
+    .main-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 4rem;
+    }
+
+    @media (max-width: 1024px) {
+      .main-content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Article Body */
+    .article-body {
+      background: rgba(26, 45, 74, 0.5);
+      border: 1px solid rgba(0, 168, 255, 0.1);
+      border-radius: 20px;
+      padding: 3rem;
+    }
+
+    .article-body h2 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 1.8rem;
+      color: #ffffff;
+      margin: 2.5rem 0 1rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(0, 168, 255, 0.1);
+    }
+
+    .article-body h2:first-child {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: none;
+    }
+
+    .article-body h3 {
+      font-size: 1.3rem;
+      color: #00a8ff;
+      margin: 2rem 0 1rem;
+    }
+
+    .article-body p {
+      color: #c8d9eb;
+      margin-bottom: 1.5rem;
+      font-size: 1.05rem;
+    }
+
+    .article-body ul, .article-body ol {
+      margin: 1.5rem 0;
+      padding-left: 1.5rem;
+      color: #c8d9eb;
+    }
+
+    .article-body li {
+      margin-bottom: 0.75rem;
+    }
+
+    .article-body strong {
+      color: #ffffff;
+    }
+
+    /* Lead Paragraph */
+    .lead-paragraph {
+      font-size: 1.2rem;
+      color: #a8c4e0;
+      line-height: 1.9;
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(0, 168, 255, 0.1);
+    }
+
+    /* Callout Boxes */
+    .callout {
+      background: linear-gradient(135deg, rgba(0, 168, 255, 0.1) 0%, rgba(0, 102, 204, 0.1) 100%);
+      border: 1px solid rgba(0, 168, 255, 0.3);
+      border-left: 4px solid #00a8ff;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .callout-title {
+      font-weight: 600;
+      color: #00a8ff;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .callout p {
+      margin-bottom: 0;
+      color: #a8c4e0;
+    }
+
+    .callout-warning {
+      background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 152, 0, 0.1) 100%);
+      border-color: rgba(255, 193, 7, 0.3);
+      border-left-color: #ffc107;
+    }
+
+    .callout-warning .callout-title {
+      color: #ffc107;
+    }
+
+    .callout-success {
+      background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(56, 142, 60, 0.1) 100%);
+      border-color: rgba(76, 175, 80, 0.3);
+      border-left-color: #4caf50;
+    }
+
+    .callout-success .callout-title {
+      color: #4caf50;
+    }
+
+    /* Diagram Container */
+    .diagram-container {
+      background: linear-gradient(145deg, #0d2840 0%, #1a3a5c 100%);
+      border: 1px solid rgba(0, 168, 255, 0.2);
+      border-radius: 16px;
+      padding: 2rem;
+      margin: 2rem 0;
+      text-align: center;
+    }
+
+    .diagram-title {
+      font-size: 1rem;
+      color: #00a8ff;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+
+    .diagram-caption {
+      font-size: 0.875rem;
+      color: #6b8299;
+      margin-top: 1rem;
+      font-style: italic;
+    }
+
+    /* Comparison Table */
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2rem 0;
+      font-size: 0.95rem;
+    }
+
+    .comparison-table th {
+      background: linear-gradient(135deg, #00a8ff 0%, #0066cc 100%);
+      color: white;
+      padding: 1rem;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    .comparison-table th:first-child {
+      border-radius: 12px 0 0 0;
+    }
+
+    .comparison-table th:last-child {
+      border-radius: 0 12px 0 0;
+    }
+
+    .comparison-table td {
+      padding: 1rem;
+      border-bottom: 1px solid rgba(0, 168, 255, 0.1);
+      color: #c8d9eb;
+    }
+
+    .comparison-table tr:nth-child(even) {
+      background: rgba(0, 168, 255, 0.05);
+    }
+
+    .comparison-table tr:last-child td:first-child {
+      border-radius: 0 0 0 12px;
+    }
+
+    .comparison-table tr:last-child td:last-child {
+      border-radius: 0 0 12px 0;
+    }
+
+    .check-icon {
+      color: #4caf50;
+    }
+
+    .x-icon {
+      color: #f44336;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    @media (max-width: 768px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .stat-card {
+      background: linear-gradient(145deg, rgba(0, 168, 255, 0.1) 0%, rgba(0, 102, 204, 0.1) 100%);
+      border: 1px solid rgba(0, 168, 255, 0.2);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #00a8ff;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: #8fa8c8;
+      margin-top: 0.5rem;
+    }
+
+    /* Process Steps */
+    .process-steps {
+      margin: 2rem 0;
+    }
+
+    .process-step {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      align-items: flex-start;
+    }
+
+    .step-number {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #00a8ff 0%, #0066cc 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: white;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .step-content h4 {
+      color: #ffffff;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .step-content p {
+      color: #a8c4e0;
+      margin-bottom: 0;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: sticky;
+      top: 100px;
+      height: fit-content;
+    }
+
+    .sidebar-section {
+      background: rgba(26, 45, 74, 0.5);
+      border: 1px solid rgba(0, 168, 255, 0.1);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .sidebar-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #00a8ff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 1rem;
+    }
+
+    /* Table of Contents */
+    .toc-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .toc-list li {
+      margin-bottom: 0.75rem;
+    }
+
+    .toc-list a {
+      color: #8fa8c8;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+      display: block;
+      padding: 0.25rem 0;
+    }
+
+    .toc-list a:hover {
+      color: #00a8ff;
+    }
+
+    /* Related Articles */
+    .related-article {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(0, 168, 255, 0.1);
+      text-decoration: none;
+    }
+
+    .related-article:last-child {
+      border-bottom: none;
+    }
+
+    .related-article-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #1a3a5c 0%, #0d2840 100%);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .related-article-content h4 {
+      color: #ffffff;
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+      transition: color 0.2s;
+    }
+
+    .related-article:hover h4 {
+      color: #00a8ff;
+    }
+
+    .related-article-content span {
+      color: #6b8299;
+      font-size: 0.8rem;
+    }
+
+    /* Share Buttons */
+    .share-buttons {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .share-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: transform 0.2s, background 0.2s;
+      font-size: 1.1rem;
+    }
+
+    .share-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .share-btn-twitter {
+      background: #1da1f2;
+      color: white;
+    }
+
+    .share-btn-linkedin {
+      background: #0077b5;
+      color: white;
+    }
+
+    .share-btn-facebook {
+      background: #1877f2;
+      color: white;
+    }
+
+    .share-btn-copy {
+      background: rgba(0, 168, 255, 0.2);
+      color: #00a8ff;
+    }
+
+    /* Quote Block */
+    .quote-block {
+      background: linear-gradient(135deg, rgba(0, 168, 255, 0.05) 0%, rgba(0, 102, 204, 0.05) 100%);
+      border-left: 4px solid #00a8ff;
+      padding: 2rem;
+      margin: 2rem 0;
+      border-radius: 0 12px 12px 0;
+    }
+
+    .quote-text {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 1.3rem;
+      color: #c8d9eb;
+      font-style: italic;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .quote-author {
+      color: #00a8ff;
+      font-weight: 500;
+    }
+
+    /* Image with Caption */
+    .image-block {
+      margin: 2rem 0;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(0, 168, 255, 0.2);
+    }
+
+    .image-block img {
+      width: 100%;
+      display: block;
+    }
+
+    .image-caption {
+      background: rgba(0, 168, 255, 0.1);
+      padding: 1rem;
+      font-size: 0.875rem;
+      color: #8fa8c8;
+      text-align: center;
+    }
+
+    /* Footer */
+    .footer {
+      background: rgba(10, 22, 40, 0.95);
+      border-top: 1px solid rgba(0, 168, 255, 0.2);
+      padding: 3rem 2rem;
+      text-align: center;
+      margin-top: 4rem;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .footer-logo span {
+      color: #00a8ff;
+    }
+
+    .footer-text {
+      color: #6b8299;
+      font-size: 0.875rem;
+    }
+
+    /* Article Tags */
+    .article-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(0, 168, 255, 0.1);
+    }
+
+    .tag {
+      background: rgba(0, 168, 255, 0.15);
+      color: #00a8ff;
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .tag:hover {
+      background: rgba(0, 168, 255, 0.25);
+    }
+
+    /* Author Bio */
+    .author-bio {
+      background: linear-gradient(145deg, rgba(0, 168, 255, 0.1) 0%, rgba(0, 102, 204, 0.1) 100%);
+      border: 1px solid rgba(0, 168, 255, 0.2);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-top: 3rem;
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 768px) {
+      .author-bio {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+      }
+    }
+
+    .author-bio-avatar {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #00a8ff 0%, #0066cc 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: white;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .author-bio-content h4 {
+      color: #ffffff;
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .author-bio-content .author-role {
+      color: #00a8ff;
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .author-bio-content p {
+      color: #a8c4e0;
+      font-size: 0.95rem;
+      margin-bottom: 0;
+    }
+
+    /* Staging Badge */
+    .staging-notice {
+      background: linear-gradient(90deg, rgba(255, 107, 53, 0.15) 0%, rgba(247, 147, 30, 0.15) 100%);
+      border: 1px solid rgba(255, 107, 53, 0.3);
+      color: #ff9f6b;
+      padding: 0.75rem 1.5rem;
+      text-align: center;
+      font-size: 0.85rem;
+    }
+
+    .staging-notice strong {
+      color: #ffb380;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .article-title {
+        font-size: 2rem;
+      }
+
+      .article-body {
+        padding: 1.5rem;
+      }
+
+      .article-meta {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .hero-image-content {
+        padding: 1.5rem;
+        min-height: 250px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="staging-notice">
+    <strong>📋 Staging Preview:</strong> This article is pending review. Content may change before publication.
+  </div>
+
+  <header class="header">
+    <div class="header-content">
+      <a href="../bactrack-blog-staging.html" class="logo">
+        <div class="logo-icon">BT</div>
+        <div class="logo-text">BACtrack <span>View</span></div>
+      </a>
+      <a href="../bactrack-blog-staging.html" class="back-link">
+        ← Back to Staging
+      </a>
+    </div>
+  </header>
+
+  <article>
+    <section class="article-hero">
+      <div class="hero-content">
+        <span class="article-category">Featured • Science</span>
+        <h1 class="article-title">The Science Behind Breath Alcohol Testing: How BACtrack Technology Works</h1>
+        <p class="article-subtitle">Dive deep into the electrochemical fuel cell technology that powers BACtrack breathalyzers and learn why accuracy matters for personal safety decisions.</p>
+        <div class="article-meta">
+          <div class="meta-item">
+            <div class="author-avatar">DR</div>
+            <div class="author-info">
+              <div class="author-name">Dr. David Roberts</div>
+              <div class="author-title">Chief Science Officer</div>
+            </div>
+          </div>
+          <div class="meta-item">📅 January 15, 2025</div>
+          <div class="meta-item">⏱️ 8 min read</div>
+          <div class="meta-item">🔬 Peer Reviewed</div>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <div class="hero-image-content">
+          <svg class="breathalyzer-svg" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
+            <!-- Background elements -->
+            <defs>
+              <linearGradient id="deviceGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#2a4a6a"/>
+                <stop offset="100%" style="stop-color:#1a3a5a"/>
+              </linearGradient>
+              <linearGradient id="screenGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#001a33"/>
+                <stop offset="100%" style="stop-color:#003366"/>
+              </linearGradient>
+              <linearGradient id="glowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#00a8ff;stop-opacity:0"/>
+                <stop offset="50%" style="stop-color:#00a8ff;stop-opacity:0.3"/>
+                <stop offset="100%" style="stop-color:#00a8ff;stop-opacity:0"/>
+              </linearGradient>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                <feMerge>
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+
+            <!-- Main device body -->
+            <rect x="200" y="30" width="200" height="240" rx="20" fill="url(#deviceGradient)" stroke="#00a8ff" stroke-width="2"/>
+
+            <!-- Screen -->
+            <rect x="220" y="50" width="160" height="100" rx="10" fill="url(#screenGradient)" stroke="#00a8ff" stroke-width="1"/>
+
+            <!-- BAC Display -->
+            <text x="300" y="95" text-anchor="middle" fill="#00a8ff" font-family="monospace" font-size="32" font-weight="bold" filter="url(#glow)">0.00</text>
+            <text x="300" y="115" text-anchor="middle" fill="#4dc3ff" font-family="sans-serif" font-size="12">% BAC</text>
+            <text x="300" y="140" text-anchor="middle" fill="#00ff88" font-family="sans-serif" font-size="14">✓ SAFE</text>
+
+            <!-- Sensor area -->
+            <rect x="270" y="165" width="60" height="30" rx="5" fill="#1a3a5a" stroke="#00a8ff" stroke-width="1"/>
+            <text x="300" y="185" text-anchor="middle" fill="#6b8299" font-size="10">SENSOR</text>
+
+            <!-- Mouthpiece -->
+            <rect x="285" y="5" width="30" height="35" rx="5" fill="#3a5a7a" stroke="#00a8ff" stroke-width="1"/>
+            <ellipse cx="300" cy="8" rx="12" ry="5" fill="#4a6a8a"/>
+
+            <!-- Button -->
+            <circle cx="300" cy="230" r="20" fill="#1a3a5a" stroke="#00a8ff" stroke-width="2"/>
+            <circle cx="300" cy="230" r="15" fill="#00a8ff" opacity="0.3"/>
+
+            <!-- Molecular diagram - Ethanol -->
+            <g transform="translate(50, 100)">
+              <text x="50" y="0" text-anchor="middle" fill="#00a8ff" font-size="12" font-weight="bold">ETHANOL MOLECULE</text>
+              <text x="50" y="15" text-anchor="middle" fill="#6b8299" font-size="10">C₂H₅OH</text>
+              <!-- Carbon atoms -->
+              <circle cx="30" cy="60" r="15" fill="#444" stroke="#00a8ff" stroke-width="2"/>
+              <text x="30" y="65" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">C</text>
+              <circle cx="70" cy="60" r="15" fill="#444" stroke="#00a8ff" stroke-width="2"/>
+              <text x="70" y="65" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">C</text>
+              <!-- Oxygen atom -->
+              <circle cx="110" cy="60" r="15" fill="#c44" stroke="#ff6b6b" stroke-width="2"/>
+              <text x="110" y="65" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">O</text>
+              <!-- Hydrogen atoms -->
+              <circle cx="10" cy="40" r="8" fill="#226" stroke="#4dc3ff" stroke-width="1"/>
+              <text x="10" y="43" text-anchor="middle" fill="#fff" font-size="8">H</text>
+              <circle cx="10" cy="80" r="8" fill="#226" stroke="#4dc3ff" stroke-width="1"/>
+              <text x="10" y="83" text-anchor="middle" fill="#fff" font-size="8">H</text>
+              <circle cx="30" cy="95" r="8" fill="#226" stroke="#4dc3ff" stroke-width="1"/>
+              <text x="30" y="98" text-anchor="middle" fill="#fff" font-size="8">H</text>
+              <circle cx="70" cy="30" r="8" fill="#226" stroke="#4dc3ff" stroke-width="1"/>
+              <text x="70" y="33" text-anchor="middle" fill="#fff" font-size="8">H</text>
+              <circle cx="70" cy="95" r="8" fill="#226" stroke="#4dc3ff" stroke-width="1"/>
+              <text x="70" y="98" text-anchor="middle" fill="#fff" font-size="8">H</text>
+              <circle cx="130" cy="40" r="8" fill="#226" stroke="#4dc3ff" stroke-width="1"/>
+              <text x="130" y="43" text-anchor="middle" fill="#fff" font-size="8">H</text>
+              <!-- Bonds -->
+              <line x1="45" y1="60" x2="55" y2="60" stroke="#00a8ff" stroke-width="2"/>
+              <line x1="85" y1="60" x2="95" y2="60" stroke="#00a8ff" stroke-width="2"/>
+            </g>
+
+            <!-- Fuel Cell diagram -->
+            <g transform="translate(430, 80)">
+              <text x="70" y="0" text-anchor="middle" fill="#00a8ff" font-size="12" font-weight="bold">FUEL CELL</text>
+              <text x="70" y="15" text-anchor="middle" fill="#6b8299" font-size="10">Electrochemical Reaction</text>
+              <!-- Cell body -->
+              <rect x="20" y="30" width="100" height="120" rx="5" fill="#1a3a5a" stroke="#00a8ff" stroke-width="2"/>
+              <!-- Anode -->
+              <rect x="25" y="35" width="15" height="110" fill="#c44" opacity="0.5"/>
+              <text x="32" y="95" text-anchor="middle" fill="#fff" font-size="10" transform="rotate(-90, 32, 95)">ANODE</text>
+              <!-- Cathode -->
+              <rect x="100" y="35" width="15" height="110" fill="#44c" opacity="0.5"/>
+              <text x="107" y="95" text-anchor="middle" fill="#fff" font-size="10" transform="rotate(-90, 107, 95)">CATHODE</text>
+              <!-- Electrolyte -->
+              <rect x="45" y="35" width="50" height="110" fill="#00a8ff" opacity="0.2"/>
+              <!-- Electron flow -->
+              <path d="M32 25 Q70 5 107 25" fill="none" stroke="#ffc107" stroke-width="2" stroke-dasharray="5,3"/>
+              <polygon points="107,22 112,28 102,28" fill="#ffc107"/>
+              <text x="70" y="8" text-anchor="middle" fill="#ffc107" font-size="9">e⁻ flow</text>
+              <!-- Current indicator -->
+              <text x="70" y="170" text-anchor="middle" fill="#00ff88" font-size="10">⚡ Current = BAC</text>
+            </g>
+
+            <!-- Connection lines -->
+            <path d="M150 140 Q180 140 195 100" fill="none" stroke="#00a8ff" stroke-width="1" stroke-dasharray="4,4" opacity="0.5"/>
+            <path d="M405 140 Q420 140 420 165" fill="none" stroke="#00a8ff" stroke-width="1" stroke-dasharray="4,4" opacity="0.5"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <div class="main-content">
+      <div class="article-body">
+        <p class="lead-paragraph">
+          When you blow into a BACtrack breathalyzer, a remarkable chain of chemical and electrical events unfolds in milliseconds. Understanding this science isn't just academically interesting—it's essential knowledge for anyone who wants to make informed decisions about their safety and the accuracy of their breath alcohol measurements.
+        </p>
+
+        <h2 id="introduction">Why Breath Testing Works</h2>
+
+        <p>
+          The fundamental principle behind breath alcohol testing is elegantly simple: alcohol in your bloodstream diffuses into the air in your lungs. When you exhale, that breath contains a predictable ratio of alcohol relative to what's in your blood. This relationship, known as the <strong>blood-breath partition ratio</strong>, has been scientifically established at approximately 2100:1—meaning 2100 milliliters of alveolar breath air contains roughly the same amount of alcohol as 1 milliliter of blood.
+        </p>
+
+        <p>
+          This isn't a new discovery. Scientists first documented this relationship in the 1950s, and decades of research have refined our understanding. Modern breathalyzers leverage this biological constant to provide remarkably accurate BAC readings without requiring an invasive blood draw.
+        </p>
+
+        <div class="callout">
+          <div class="callout-title">🔬 Key Scientific Principle</div>
+          <p>Alcohol is volatile, meaning it evaporates easily. When alcohol-laden blood passes through your lungs, some of that alcohol transfers into the air you breathe out—creating a measurable sample that reflects your true blood alcohol content.</p>
+        </div>
+
+        <h2 id="sensor-technology">The Two Types of Breathalyzer Sensors</h2>
+
+        <p>
+          Not all breathalyzers are created equal. The accuracy and reliability of any breath alcohol testing device depends primarily on its sensor technology. There are two main types of sensors used in personal and professional breathalyzers, and understanding the difference is crucial.
+        </p>
+
+        <h3>Semiconductor (MOS) Sensors</h3>
+
+        <p>
+          Entry-level breathalyzers typically use <strong>metal oxide semiconductor (MOS)</strong> sensors. These sensors work by measuring changes in electrical resistance when alcohol molecules contact a heated metal oxide surface. While cost-effective, MOS sensors have significant limitations:
+        </p>
+
+        <ul>
+          <li>They can react to substances other than alcohol (acetone, cigarette smoke, certain foods)</li>
+          <li>Accuracy degrades more quickly over time</li>
+          <li>Results can be influenced by temperature and humidity</li>
+          <li>Generally not accepted for law enforcement or workplace testing</li>
+        </ul>
+
+        <h3>Electrochemical Fuel Cell Sensors</h3>
+
+        <p>
+          Professional-grade breathalyzers, including all BACtrack devices, use <strong>electrochemical fuel cell sensors</strong>. This is the same technology used by law enforcement agencies worldwide, and for good reason: it offers unparalleled specificity and accuracy.
+        </p>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value">±0.005%</div>
+            <div class="stat-label">Accuracy at 0.08% BAC</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">99.9%</div>
+            <div class="stat-label">Alcohol Specificity</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">1000+</div>
+            <div class="stat-label">Tests Per Sensor</div>
+          </div>
+        </div>
+
+        <h2 id="how-fuel-cells-work">How Electrochemical Fuel Cells Work</h2>
+
+        <p>
+          The electrochemical fuel cell is a marvel of analytical chemistry. When you provide a breath sample to a BACtrack device, here's what happens inside the sensor:
+        </p>
+
+        <div class="process-steps">
+          <div class="process-step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h4>Sample Collection</h4>
+              <p>Your breath enters a chamber containing the fuel cell sensor. The device ensures you provide "deep lung air" (alveolar air) by requiring a sustained breath—this air most accurately reflects your blood alcohol level.</p>
+            </div>
+          </div>
+
+          <div class="process-step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h4>Oxidation at the Anode</h4>
+              <p>Ethanol molecules in your breath contact the platinum anode and undergo oxidation. The chemical reaction: CH₃CH₂OH + H₂O → CH₃COOH + 4H⁺ + 4e⁻. This releases electrons and hydrogen ions.</p>
+            </div>
+          </div>
+
+          <div class="process-step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h4>Electron Flow</h4>
+              <p>The freed electrons flow through an external circuit from the anode to the cathode, creating a measurable electrical current. This current is directly proportional to the amount of alcohol being oxidized.</p>
+            </div>
+          </div>
+
+          <div class="process-step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <h4>Reduction at the Cathode</h4>
+              <p>At the cathode, oxygen from the air combines with the hydrogen ions and electrons to form water, completing the circuit: O₂ + 4H⁺ + 4e⁻ → 2H₂O.</p>
+            </div>
+          </div>
+
+          <div class="process-step">
+            <div class="step-number">5</div>
+            <div class="step-content">
+              <h4>BAC Calculation</h4>
+              <p>A microprocessor measures the electrical current and converts it to a BAC reading using precisely calibrated algorithms. The result appears on your screen within seconds.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="diagram-container">
+          <div class="diagram-title">Electrochemical Reaction Process</div>
+          <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto;">
+            <!-- Anode side -->
+            <rect x="50" y="40" width="150" height="120" rx="10" fill="rgba(255,107,107,0.2)" stroke="#ff6b6b" stroke-width="2"/>
+            <text x="125" y="30" text-anchor="middle" fill="#ff6b6b" font-size="14" font-weight="bold">ANODE (+)</text>
+            <text x="125" y="70" text-anchor="middle" fill="#c8d9eb" font-size="11">Ethanol + Water</text>
+            <text x="125" y="90" text-anchor="middle" fill="#ffffff" font-size="12">↓</text>
+            <text x="125" y="110" text-anchor="middle" fill="#c8d9eb" font-size="11">Acetic Acid +</text>
+            <text x="125" y="130" text-anchor="middle" fill="#ffc107" font-size="12" font-weight="bold">4e⁻ + 4H⁺</text>
+
+            <!-- Arrow -->
+            <path d="M210 100 L290 100" stroke="#00a8ff" stroke-width="3" marker-end="url(#arrowhead)"/>
+            <defs>
+              <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="#00a8ff"/>
+              </marker>
+            </defs>
+            <text x="250" y="85" text-anchor="middle" fill="#ffc107" font-size="12">e⁻ flow</text>
+
+            <!-- Current measurement -->
+            <rect x="275" y="40" width="150" height="120" rx="10" fill="rgba(0,168,255,0.2)" stroke="#00a8ff" stroke-width="2"/>
+            <text x="350" y="30" text-anchor="middle" fill="#00a8ff" font-size="14" font-weight="bold">MEASUREMENT</text>
+            <text x="350" y="75" text-anchor="middle" fill="#c8d9eb" font-size="11">Current (μA)</text>
+            <text x="350" y="95" text-anchor="middle" fill="#ffffff" font-size="12">↓</text>
+            <text x="350" y="115" text-anchor="middle" fill="#c8d9eb" font-size="11">Microprocessor</text>
+            <text x="350" y="135" text-anchor="middle" fill="#00ff88" font-size="12" font-weight="bold">→ BAC %</text>
+
+            <!-- Arrow -->
+            <path d="M435 100 L515 100" stroke="#00a8ff" stroke-width="3" marker-end="url(#arrowhead)"/>
+
+            <!-- Cathode side -->
+            <rect x="500" y="40" width="150" height="120" rx="10" fill="rgba(107,168,255,0.2)" stroke="#4dc3ff" stroke-width="2"/>
+            <text x="575" y="30" text-anchor="middle" fill="#4dc3ff" font-size="14" font-weight="bold">CATHODE (-)</text>
+            <text x="575" y="70" text-anchor="middle" fill="#c8d9eb" font-size="11">Oxygen + H⁺ + e⁻</text>
+            <text x="575" y="90" text-anchor="middle" fill="#ffffff" font-size="12">↓</text>
+            <text x="575" y="115" text-anchor="middle" fill="#00ff88" font-size="14" font-weight="bold">H₂O</text>
+            <text x="575" y="135" text-anchor="middle" fill="#c8d9eb" font-size="11">(Water)</text>
+          </svg>
+          <p class="diagram-caption">The complete electrochemical reaction cycle in a fuel cell breathalyzer sensor</p>
+        </div>
+
+        <h2 id="why-accuracy-matters">Why Accuracy Matters</h2>
+
+        <p>
+          You might wonder: does a difference of 0.01% BAC really matter? The answer is an emphatic yes. Consider these facts:
+        </p>
+
+        <div class="callout callout-warning">
+          <div class="callout-title">⚠️ Critical Threshold</div>
+          <p>The legal limit in most U.S. states is 0.08% BAC. At 0.07%, you're legal to drive. At 0.08%, you're committing a crime. A breathalyzer that's off by even 0.01% could give you dangerously misleading information.</p>
+        </div>
+
+        <p>
+          But legal limits aside, impairment begins well before you reach 0.08%. Research shows that:
+        </p>
+
+        <ul>
+          <li><strong>At 0.02% BAC:</strong> Some loss of judgment, relaxation, slight body warmth, altered mood</li>
+          <li><strong>At 0.05% BAC:</strong> Exaggerated behavior, impaired judgment, lowered alertness, reduced coordination</li>
+          <li><strong>At 0.08% BAC:</strong> Poor muscle coordination, impaired perception, reduced ability to detect danger</li>
+          <li><strong>At 0.10% BAC:</strong> Clear deterioration of reaction time and control, slurred speech, poor coordination</li>
+        </ul>
+
+        <p>
+          Accurate measurement empowers you to understand exactly where you stand and make informed decisions—whether that's calling a rideshare, waiting another hour, or knowing you're genuinely safe to drive.
+        </p>
+
+        <h2 id="technology-comparison">Sensor Technology Comparison</h2>
+
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Semiconductor (MOS)</th>
+              <th>Fuel Cell</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Alcohol Specificity</strong></td>
+              <td>May react to other substances</td>
+              <td><span class="check-icon">✓</span> Highly specific to alcohol</td>
+            </tr>
+            <tr>
+              <td><strong>Accuracy</strong></td>
+              <td>±0.02% at 0.08% BAC</td>
+              <td><span class="check-icon">✓</span> ±0.005% at 0.08% BAC</td>
+            </tr>
+            <tr>
+              <td><strong>Police/DOT Approved</strong></td>
+              <td><span class="x-icon">✗</span> No</td>
+              <td><span class="check-icon">✓</span> Yes</td>
+            </tr>
+            <tr>
+              <td><strong>Sensor Longevity</strong></td>
+              <td>~300 tests</td>
+              <td><span class="check-icon">✓</span> 1000+ tests</td>
+            </tr>
+            <tr>
+              <td><strong>Environmental Stability</strong></td>
+              <td>Affected by temperature/humidity</td>
+              <td><span class="check-icon">✓</span> Stable across conditions</td>
+            </tr>
+            <tr>
+              <td><strong>Calibration Frequency</strong></td>
+              <td>Every 3-6 months</td>
+              <td>Annually (with normal use)</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2 id="bactrack-advantage">The BACtrack Advantage</h2>
+
+        <p>
+          BACtrack has been at the forefront of breath alcohol testing innovation since 2001. Our commitment to accuracy isn't just marketing—it's backed by FDA clearance and DOT/NHTSA compliance for our professional-grade devices.
+        </p>
+
+        <div class="quote-block">
+          <p class="quote-text">"We don't just build breathalyzers. We build trust. Every BACtrack device represents our commitment to putting accurate, reliable information in people's hands so they can make decisions that save lives."</p>
+          <p class="quote-author">— Keith Nothacker, Founder & CEO, BACtrack</p>
+        </div>
+
+        <h3>Xtend® Fuel Cell Technology</h3>
+
+        <p>
+          BACtrack's proprietary <strong>Xtend® fuel cell sensors</strong> represent the pinnacle of portable breath testing technology. These sensors incorporate several innovations:
+        </p>
+
+        <ul>
+          <li><strong>Extended sensor life:</strong> Optimized platinum catalyst loading provides consistent accuracy over thousands of tests</li>
+          <li><strong>Rapid response:</strong> Results in approximately 5 seconds after breath sample collection</li>
+          <li><strong>Temperature compensation:</strong> Internal algorithms adjust for ambient temperature variations</li>
+          <li><strong>Linear response:</strong> Accurate readings across the full measurement range (0.000% to 0.400% BAC)</li>
+        </ul>
+
+        <h2 id="proper-testing">Getting Accurate Results: Best Practices</h2>
+
+        <p>
+          Even the most sophisticated breathalyzer can only provide accurate results if used correctly. Here are essential tips for reliable testing:
+        </p>
+
+        <div class="callout callout-success">
+          <div class="callout-title">✓ Testing Best Practices</div>
+          <p><strong>Wait 15-20 minutes</strong> after your last drink, food, or cigarette before testing. This allows any residual mouth alcohol to dissipate and ensures you're measuring deep lung air, not recent oral contamination.</p>
+        </div>
+
+        <ol>
+          <li><strong>Wait after consuming anything:</strong> Residual alcohol in your mouth from a recent drink can cause falsely high readings. The 15-20 minute wait is crucial.</li>
+          <li><strong>Provide a steady breath:</strong> Blow firmly and consistently until the device signals completion. Weak or short breaths may not provide enough sample.</li>
+          <li><strong>Test at peak absorption:</strong> Alcohol levels typically peak 30-90 minutes after your last drink, depending on factors like food consumption and drink type.</li>
+          <li><strong>Understand rising BAC:</strong> Your BAC may still be rising even after you stop drinking. If you recently finished drinking, test again in 30 minutes to see your true peak.</li>
+          <li><strong>Maintain your device:</strong> Regular calibration ensures continued accuracy. BACtrack recommends annual calibration for typical use.</li>
+        </ol>
+
+        <h2 id="science-trust">The Science of Trust</h2>
+
+        <p>
+          At its core, breath alcohol testing is about one thing: giving you reliable information to make safe decisions. The electrochemical fuel cell sensor—refined over decades of scientific advancement—provides that reliability.
+        </p>
+
+        <p>
+          When you use a BACtrack breathalyzer, you're benefiting from:
+        </p>
+
+        <ul>
+          <li>Technology proven in tens of millions of law enforcement tests worldwide</li>
+          <li>Rigorous manufacturing standards with individual sensor calibration</li>
+          <li>FDA 510(k) clearance for personal use devices</li>
+          <li>Continuous innovation from a company dedicated solely to breath alcohol testing</li>
+        </ul>
+
+        <p>
+          The science is sound. The technology is proven. And the result is a tool that empowers you to understand your body's alcohol level with confidence—because when it comes to decisions about safety, accuracy isn't optional.
+        </p>
+
+        <div class="callout">
+          <div class="callout-title">📚 Continue Learning</div>
+          <p>This is the first article in our Science Series. Coming next: "Understanding Blood Alcohol Content: What the Numbers Really Mean" — where we'll explore how different BAC levels affect your body and mind.</p>
+        </div>
+
+        <div class="article-tags">
+          <a href="#" class="tag">Science</a>
+          <a href="#" class="tag">Technology</a>
+          <a href="#" class="tag">Fuel Cell</a>
+          <a href="#" class="tag">Accuracy</a>
+          <a href="#" class="tag">Safety</a>
+          <a href="#" class="tag">Breathalyzer</a>
+          <a href="#" class="tag">How It Works</a>
+        </div>
+
+        <div class="author-bio">
+          <div class="author-bio-avatar">DR</div>
+          <div class="author-bio-content">
+            <h4>Dr. David Roberts</h4>
+            <p class="author-role">Chief Science Officer, BACtrack</p>
+            <p>Dr. Roberts holds a Ph.D. in Analytical Chemistry from Stanford University and has spent over 15 years advancing breath alcohol sensing technology. He leads BACtrack's research and development team and has authored numerous peer-reviewed papers on electrochemical detection methods.</p>
+          </div>
+        </div>
+      </div>
+
+      <aside class="sidebar">
+        <div class="sidebar-section">
+          <h3 class="sidebar-title">Table of Contents</h3>
+          <ul class="toc-list">
+            <li><a href="#introduction">Why Breath Testing Works</a></li>
+            <li><a href="#sensor-technology">Two Types of Sensors</a></li>
+            <li><a href="#how-fuel-cells-work">How Fuel Cells Work</a></li>
+            <li><a href="#why-accuracy-matters">Why Accuracy Matters</a></li>
+            <li><a href="#technology-comparison">Technology Comparison</a></li>
+            <li><a href="#bactrack-advantage">The BACtrack Advantage</a></li>
+            <li><a href="#proper-testing">Best Practices</a></li>
+            <li><a href="#science-trust">The Science of Trust</a></li>
+          </ul>
+        </div>
+
+        <div class="sidebar-section">
+          <h3 class="sidebar-title">Share Article</h3>
+          <div class="share-buttons">
+            <a href="#" class="share-btn share-btn-twitter" title="Share on Twitter">𝕏</a>
+            <a href="#" class="share-btn share-btn-linkedin" title="Share on LinkedIn">in</a>
+            <a href="#" class="share-btn share-btn-facebook" title="Share on Facebook">f</a>
+            <a href="#" class="share-btn share-btn-copy" title="Copy Link">🔗</a>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <h3 class="sidebar-title">Related Articles</h3>
+          <a href="#" class="related-article">
+            <div class="related-article-icon">❤️</div>
+            <div class="related-article-content">
+              <h4>Understanding Blood Alcohol Content</h4>
+              <span>6 min read</span>
+            </div>
+          </a>
+          <a href="#" class="related-article">
+            <div class="related-article-icon">🔋</div>
+            <div class="related-article-content">
+              <h4>Caring for Your BACtrack</h4>
+              <span>4 min read</span>
+            </div>
+          </a>
+          <a href="#" class="related-article">
+            <div class="related-article-icon">⭐</div>
+            <div class="related-article-content">
+              <h4>BACtrack Product Comparison</h4>
+              <span>5 min read</span>
+            </div>
+          </a>
+        </div>
+
+        <div class="sidebar-section" style="background: linear-gradient(135deg, rgba(0, 168, 255, 0.2) 0%, rgba(0, 102, 204, 0.2) 100%); border-color: rgba(0, 168, 255, 0.3);">
+          <h3 class="sidebar-title" style="color: #ffffff;">Quick Facts</h3>
+          <ul style="list-style: none; padding: 0; font-size: 0.9rem; color: #c8d9eb;">
+            <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
+              <span style="position: absolute; left: 0;">🔬</span>
+              Fuel cells are specific to alcohol—no false positives from food or mouthwash
+            </li>
+            <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
+              <span style="position: absolute; left: 0;">⚡</span>
+              Results in approximately 5 seconds
+            </li>
+            <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
+              <span style="position: absolute; left: 0;">🎯</span>
+              Accuracy within ±0.005% at 0.08% BAC
+            </li>
+            <li style="padding-left: 1.5rem; position: relative;">
+              <span style="position: absolute; left: 0;">✅</span>
+              Same technology used by law enforcement
+            </li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </article>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">BACtrack <span>View</span></div>
+      <p class="footer-text">Professional-Grade Personal Breathalyzers | © 2025 BACtrack, Inc.</p>
+    </div>
+  </footer>
+</body>
+</html>
