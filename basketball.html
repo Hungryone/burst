@@ -200,6 +200,44 @@
       const [showStats, setShowStats] = useState(false);
       const [errorMessage, setErrorMessage] = useState('');
       const [article, setArticle] = useState(null);
+      const [showHistory, setShowHistory] = useState(false);
+      const [gameHistory, setGameHistory] = useState([]);
+
+      // Load history from localStorage
+      const loadHistory = () => {
+        try {
+          const saved = localStorage.getItem('hoopsShowdownHistory');
+          return saved ? JSON.parse(saved) : [];
+        } catch (e) {
+          return [];
+        }
+      };
+
+      // Save game to history
+      const saveGameToHistory = (score1, score2, stats1, stats2) => {
+        const history = loadHistory();
+        const newGame = {
+          id: Date.now(),
+          date: new Date().toLocaleString(),
+          team1Score: score1,
+          team2Score: score2,
+          team1TopScorer: stats1[0]?.name || 'Unknown',
+          team1TopPoints: stats1[0]?.points || 0,
+          team2TopScorer: stats2[0]?.name || 'Unknown',
+          team2TopPoints: stats2[0]?.points || 0,
+          winner: score1 > score2 ? 'The Ballers' : 'The Rangers'
+        };
+        const updatedHistory = [newGame, ...history].slice(0, 50); // Keep last 50 games
+        localStorage.setItem('hoopsShowdownHistory', JSON.stringify(updatedHistory));
+      };
+
+      // Toggle history display
+      const toggleHistory = () => {
+        if (!showHistory) {
+          setGameHistory(loadHistory());
+        }
+        setShowHistory(!showHistory);
+      };
 
       // Article templates with placeholders for dynamic content
       const articleTemplates = [
@@ -396,6 +434,7 @@
         setTeam1Stats(stats1);
         setTeam2Stats(stats2);
         setArticle(generateArticle(stats1, stats2, score1, score2));
+        saveGameToHistory(score1, score2, stats1, stats2);
         setGameState('loading');
         setCountdown(10);
         setLoadingPhase(0);
@@ -429,6 +468,7 @@
         setShowStats(false);
         setErrorMessage('');
         setArticle(null);
+        setShowHistory(false);
       };
 
       const updatePlayer = (team, index, value) => {
@@ -1089,7 +1129,7 @@
                 </div>
               )}
 
-              {/* Play Again Button */}
+              {/* Play Again and View History Buttons */}
               {showStats && (
                 <div style={{
                   textAlign: 'center',
@@ -1099,6 +1139,163 @@
                   <button className="play-again" onClick={resetGame}>
                     PLAY AGAIN 🔄
                   </button>
+                  <div style={{ marginTop: '20px' }}>
+                    <button
+                      onClick={toggleHistory}
+                      style={{
+                        background: 'transparent',
+                        border: '2px solid rgba(255, 255, 255, 0.3)',
+                        padding: '12px 30px',
+                        fontSize: '18px',
+                        fontFamily: 'Bebas Neue, sans-serif',
+                        letterSpacing: '2px',
+                        color: 'rgba(255, 255, 255, 0.7)',
+                        borderRadius: '30px',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease'
+                      }}
+                      onMouseOver={(e) => {
+                        e.target.style.borderColor = '#ffaa00';
+                        e.target.style.color = '#ffaa00';
+                      }}
+                      onMouseOut={(e) => {
+                        e.target.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                        e.target.style.color = 'rgba(255, 255, 255, 0.7)';
+                      }}
+                    >
+                      {showHistory ? 'HIDE HISTORY 📊' : 'VIEW HISTORY 📊'}
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Game History */}
+              {showStats && showHistory && (
+                <div style={{
+                  marginTop: '40px',
+                  animation: 'slideIn 0.4s ease-out'
+                }}>
+                  <div className="team-card" style={{
+                    maxWidth: '900px',
+                    margin: '0 auto',
+                    background: 'linear-gradient(180deg, rgba(30, 30, 50, 0.95) 0%, rgba(20, 20, 35, 0.98) 100%)',
+                    border: '2px solid rgba(255, 255, 255, 0.2)'
+                  }}>
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '12px',
+                      marginBottom: '20px',
+                      paddingBottom: '15px',
+                      borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+                    }}>
+                      <span style={{ fontSize: '24px' }}>📊</span>
+                      <span style={{
+                        fontFamily: 'Orbitron, sans-serif',
+                        fontSize: '16px',
+                        color: '#fff',
+                        letterSpacing: '3px'
+                      }}>GAME HISTORY</span>
+                      <span style={{
+                        fontFamily: 'Rajdhani, sans-serif',
+                        fontSize: '14px',
+                        color: 'rgba(255, 255, 255, 0.5)',
+                        marginLeft: 'auto'
+                      }}>
+                        {gameHistory.length} game{gameHistory.length !== 1 ? 's' : ''} played
+                      </span>
+                    </div>
+
+                    {gameHistory.length === 0 ? (
+                      <p style={{
+                        fontFamily: 'Rajdhani, sans-serif',
+                        fontSize: '16px',
+                        color: 'rgba(255, 255, 255, 0.5)',
+                        textAlign: 'center',
+                        padding: '20px'
+                      }}>
+                        No games played yet. This is your first game!
+                      </p>
+                    ) : (
+                      <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
+                        {gameHistory.map((game, index) => (
+                          <div
+                            key={game.id}
+                            style={{
+                              display: 'grid',
+                              gridTemplateColumns: '1fr auto 1fr',
+                              alignItems: 'center',
+                              padding: '15px',
+                              borderBottom: index < gameHistory.length - 1 ? '1px solid rgba(255, 255, 255, 0.1)' : 'none',
+                              gap: '15px'
+                            }}
+                          >
+                            <div style={{ textAlign: 'right' }}>
+                              <div style={{
+                                fontFamily: 'Orbitron, sans-serif',
+                                fontSize: '14px',
+                                color: game.winner === 'The Ballers' ? '#ffaa00' : 'rgba(255, 255, 255, 0.7)',
+                                letterSpacing: '1px'
+                              }}>
+                                🔥 THE BALLERS
+                              </div>
+                              <div style={{
+                                fontFamily: 'Rajdhani, sans-serif',
+                                fontSize: '12px',
+                                color: 'rgba(255, 255, 255, 0.5)',
+                                marginTop: '4px'
+                              }}>
+                                {game.team1TopScorer}: {game.team1TopPoints} pts
+                              </div>
+                            </div>
+
+                            <div style={{
+                              textAlign: 'center',
+                              padding: '0 10px'
+                            }}>
+                              <div style={{
+                                fontFamily: 'Orbitron, sans-serif',
+                                fontSize: '20px',
+                                fontWeight: 700,
+                                color: '#fff'
+                              }}>
+                                <span style={{ color: game.winner === 'The Ballers' ? '#ffaa00' : '#fff' }}>{game.team1Score}</span>
+                                <span style={{ color: 'rgba(255, 255, 255, 0.3)', margin: '0 8px' }}>-</span>
+                                <span style={{ color: game.winner === 'The Rangers' ? '#00d4ff' : '#fff' }}>{game.team2Score}</span>
+                              </div>
+                              <div style={{
+                                fontFamily: 'Rajdhani, sans-serif',
+                                fontSize: '11px',
+                                color: 'rgba(255, 255, 255, 0.4)',
+                                marginTop: '4px'
+                              }}>
+                                {game.date}
+                              </div>
+                            </div>
+
+                            <div style={{ textAlign: 'left' }}>
+                              <div style={{
+                                fontFamily: 'Orbitron, sans-serif',
+                                fontSize: '14px',
+                                color: game.winner === 'The Rangers' ? '#00d4ff' : 'rgba(255, 255, 255, 0.7)',
+                                letterSpacing: '1px'
+                              }}>
+                                ⚡ THE RANGERS
+                              </div>
+                              <div style={{
+                                fontFamily: 'Rajdhani, sans-serif',
+                                fontSize: '12px',
+                                color: 'rgba(255, 255, 255, 0.5)',
+                                marginTop: '4px'
+                              }}>
+                                {game.team2TopScorer}: {game.team2TopPoints} pts
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
             </div>
